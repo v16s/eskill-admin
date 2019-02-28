@@ -1,11 +1,7 @@
 import React from 'react'
 import axios from 'axios'
-import { Form, Input, Button, Layout, Card, Menu, Select } from 'antd'
-const { Header, Content, Footer, Sider } = Layout
-const InputGroup = Input.Group
+import { Form, Input, Button, Select } from 'antd'
 const Option = Select.Option
-const { Meta } = Card
-const { SubMenu } = Menu
 
 class CreateTest extends React.Component {
   constructor () {
@@ -53,15 +49,45 @@ class CreateTest extends React.Component {
     const { branch, course, totQues, totTime, testID } = this.state
     return (
       <div>
+        <style jsx global>{`
+          .custom-form .ant-input-affix-wrapper .ant-input-prefix,
+          .ant-input-affix-wrapper .ant-input-suffix {
+            color: #1890ff !important;
+          }
+          .custom-form .ant-input,
+          .custom-form .ant-input:focus,
+          .custom-form .ant-input:hover,
+          .custom-form .ant-select-arrow {
+            background-color: #001f3d !important;
+            border-color: transparent !important;
+            color: #fff !important;
+          }
+          .custom-form .ant-select-selection {
+            background-color: #001f3d !important;
+            color: #fff !important;
+            border-color: transparent !important;
+          }
+          internal-autofill-previewed,
+          input:-internal-autofill-selected,
+          textarea:-internal-autofill-previewed,
+          textarea:-internal-autofill-selected,
+          select:-internal-autofill-previewed,
+          select:-internal-autofill-selected {
+            box-shadow: inset 0 0 0px 9999px #00284f;
+            border-color: transparent !important;
+          }
+          .custom-form .ant-form-item-label label {
+            color: #ddd !important;
+          }
+        `}</style>
         <Form
-          style={{ padding: 0 }}
+          style={{ padding: 0, maxWidth: 500 }}
           onSubmit={this.onSubmit}
-          className='login-form'
+          className='custom-form'
         >
           <Form.Item label='Unique Test ID'>
             <Input
               size='large'
-              style={{ width: 400 }}
               name='testID'
               onChange={this.onChange}
               value={testID}
@@ -69,49 +95,37 @@ class CreateTest extends React.Component {
               placeholder='Test ID'
             />
           </Form.Item>
-          <Form.Item />
           <Form.Item label='Branch'>
-            <InputGroup
-              compact
-              style={{ width: 400 }}
-              defaultValue='Choose'
-              value={branch}
+            <Select
+              defaultValue={'choose'}
+              name='branch'
+              onChange={this.onBranchChange}
+              size='large'
+              style={{ width: '100%' }}
             >
-              <Select
-                defaultValue={'choose'}
-                name='branch'
-                onChange={this.onBranchChange}
-              >
-                <Option value='NUll'>Choose</Option>
-                <Option value='CSE'>CSE</Option>
-                <Option value='ECE'>ECE</Option>
-                <Option value='MECH'>MECH</Option>
-              </Select>
-            </InputGroup>
+              <Option value='NUll'>Choose</Option>
+              <Option value='CSE'>CSE</Option>
+              <Option value='ECE'>ECE</Option>
+              <Option value='MECH'>MECH</Option>
+            </Select>
           </Form.Item>
           <Form.Item label='Course'>
-            <InputGroup
-              compact
-              style={{ widthg: 400 }}
-              defaultValue='Choose'
-              value={course}
+            <Select
+              defaultValue={'choose'}
+              name='course'
+              onChange={this.onSelectChange}
+              size='large'
+              style={{ width: '100%' }}
             >
-              <Select
-                defaultValue={'choose'}
-                name='course'
-                onChange={this.onSelectChange}
-              >
-                <Option value='NUll'>Choose</Option>
-                <Option value='Something'>Something</Option>
-                <Option value='Som'>Som</Option>
-                <Option value='somet'>Somet</Option>
-              </Select>
-            </InputGroup>
+              <Option value='NUll'>Choose</Option>
+              <Option value='Something'>Something</Option>
+              <Option value='Som'>Som</Option>
+              <Option value='somet'>Somet</Option>
+            </Select>
           </Form.Item>
           <Form.Item label='Questions'>
             <Input
               size='large'
-              style={{ width: 400 }}
               name='totQues'
               onChange={this.onChange}
               value={totQues}
@@ -122,7 +136,6 @@ class CreateTest extends React.Component {
           <Form.Item label='Test Time'>
             <Input
               size='large'
-              style={{ width: 400 }}
               name='totTime'
               onChange={this.onChange}
               value={totTime}
@@ -136,6 +149,7 @@ class CreateTest extends React.Component {
               size='large'
               className='Submit-button'
               onClick={this.onSubmit}
+              style={{ width: '100%' }}
             >
               Create
             </Button>

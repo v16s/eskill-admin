@@ -14,7 +14,13 @@ export default class LoggedInWrapper extends React.Component {
 
   render () {
     return (
-      <Layout style={{ backgroundColor: '#e6f7ff', minHeight: '100vh' }}>
+      <Layout
+        style={{
+          backgroundColor: '#000d19',
+          color: '#fff',
+          minHeight: '100vh'
+        }}
+      >
         <Navbar
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
@@ -22,7 +28,7 @@ export default class LoggedInWrapper extends React.Component {
         />
         <Layout>
           <Header onCollapse={this.onCollapse} collapsed={this.state} />
-          <Content style={{ backgroundColor: '##40a9ff', padding: '20px' }}>
+          <Content style={{ backgroundColor: '#000d19', padding: '20px' }}>
             {this.props.children}
           </Content>
         </Layout>

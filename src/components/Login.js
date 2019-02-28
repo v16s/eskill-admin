@@ -64,40 +64,67 @@ class Login extends Component {
           minHeight: '100vh'
         }}
       >
+        <style jsx global>{`
+          .login-form .ant-input-affix-wrapper .ant-input-prefix,
+          .ant-input-affix-wrapper .ant-input-suffix {
+            color: #1890ff !important;
+          }
+          .login-form .ant-input,
+          .login-form .ant-input:focus,
+          .login-form .ant-input:hover {
+            background-color: #001f3d !important;
+            border-color: transparent !important;
+            color: #fff !important;
+          }
+          internal-autofill-previewed,
+          input:-internal-autofill-selected,
+          textarea:-internal-autofill-previewed,
+          textarea:-internal-autofill-selected,
+          select:-internal-autofill-previewed,
+          select:-internal-autofill-selected {
+            box-shadow: inset 0 0 0px 9999px #00284f;
+          }
+        `}</style>
         <Form
           style={{
-            maxWidth: '500px',
+            maxWidth: '350px',
             alignSelf: 'center',
-            border: '1px solid #ddd',
+            backgroundColor: '#000d19',
             padding: '25px',
-            borderRadius: '4px'
+            borderRadius: '4px',
+            width: '92%',
+            fontFamily: 'sans-serif'
           }}
           onSubmit={this.onSubmit}
           className='login-form'
         >
-          <h2 style={{ marginBottom: '25px', color: '#777' }}>
-            eSkill - Admin
-          </h2>
+          <h2 style={{ marginBottom: '25px', color: '#d6e9ff' }}>Login</h2>
           <Form.Item>
             <Input
-              prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
+              prefix={<Icon type='user' />}
               name='regNumber'
               onChange={this.onChange}
               value={regNumber}
               placeholder='regNumber'
+              size='large'
             />
           </Form.Item>
           <Form.Item>
             <Input
-              prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
+              prefix={<Icon type='lock' />}
               name='password'
               onChange={this.onChange}
               value={password}
               type='password'
               placeholder='Password'
+              size='large'
             />
           </Form.Item>
           <Form.Item
+            style={{
+              color: '#fff',
+              marginBottom: 0
+            }}
             validateStatus={this.state.err != '' ? 'error' : undefined}
             help={this.state.err != '' ? this.state.err : undefined}
           >
@@ -107,6 +134,7 @@ class Login extends Component {
             <Button
               type='primary'
               htmlType='submit'
+              size='large'
               className='login-form-button'
               style={{
                 width: '100%'
@@ -114,7 +142,9 @@ class Login extends Component {
             >
               Log in
             </Button>
-            Or <Link to='/register'>register now!</Link>
+            <Link to='/register' style={{ color: '#888' }}>
+              Register
+            </Link>
           </Form.Item>
         </Form>
       </div>

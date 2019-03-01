@@ -38,13 +38,14 @@
     "react-select": "^2.0.0",
     "react-spinkit": "^3.0.0",
     "react-tex": "^1.4.0",
-    "styled-jsx": "^3.2.1"
+    "styled-jsx": "^3.2.1",
+    "styled-jsx-plugin-sass": "^1.0.0"
   },
   "scripts": {
     "start": "parcel build ./src/index.html --public-url / && electron .",
     "build": "parcel build ./src/index.html --public-url /",
     "test": "nodemon -w main.js -x electron .",
     "server": "node server",
-    "client": "parcel ./src/index.html --public-url /"
+    "client": "parcel ./src/index.html --public-url / --no-cache"
   }
 }

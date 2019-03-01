@@ -9,8 +9,9 @@ class CreateTest extends React.Component {
     this.state = {
       branch: '',
       course: '',
-      totQues: '',
-      totTime: '',
+      questions: '',
+      time: '',
+      number: '',
       testID: ''
     }
   }
@@ -28,15 +29,16 @@ class CreateTest extends React.Component {
   onSubmit = e => {
     e.preventDefault()
 
-    const { branch, course, totQues, totTime, testID } = this.state
+    const { branch, course, questions, time, testID, number } = this.state
 
     axios
       .post('http://localhost:3000/api/createTest', {
         branch,
         course,
-        totQues,
-        totTime,
-        testID
+        questions,
+        time,
+        testID,
+        number
       })
       .then(result => {
         this.props.history.push('/')
@@ -46,7 +48,7 @@ class CreateTest extends React.Component {
       })
   }
   render () {
-    const { branch, course, totQues, totTime, testID } = this.state
+    const { branch, course, questions, time, testID, number } = this.state
     return (
       <div>
         <style jsx global>{`
@@ -126,9 +128,9 @@ class CreateTest extends React.Component {
           <Form.Item label='Questions'>
             <Input
               size='large'
-              name='totQues'
+              name='questions'
               onChange={this.onChange}
-              value={totQues}
+              value={questions}
               type='number'
               placeholder='No of questions'
             />
@@ -136,11 +138,21 @@ class CreateTest extends React.Component {
           <Form.Item label='Test Time'>
             <Input
               size='large'
-              name='totTime'
+              name='time'
               onChange={this.onChange}
-              value={totTime}
+              value={time}
               type='number'
               placeholder='Total Time'
+            />
+          </Form.Item>
+          <Form.Item label='Test Time'>
+            <Input
+              size='large'
+              name='number'
+              onChange={this.onChange}
+              value={number}
+              type='number'
+              placeholder='Number of Students'
             />
           </Form.Item>
           <Form.Item>

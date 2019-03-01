@@ -32,7 +32,7 @@ class CreateTest extends React.Component {
     const { branch, course, questions, time, testID, number } = this.state
 
     axios
-      .post('http://localhost:3000/api/createTest', {
+      .post('http://localhost:3000/api/admin/createTest', {
         branch,
         course,
         questions,
@@ -40,9 +40,7 @@ class CreateTest extends React.Component {
         testID,
         number
       })
-      .then(result => {
-        this.props.history.push('/')
-      })
+      .then(result => {})
       .catch(err => {
         console.log(err)
       })

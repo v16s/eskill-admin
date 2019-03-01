@@ -13,11 +13,29 @@ class Create extends Component {
       regNumber: '',
       password: '',
       fullName: '',
-      college: '',
-      field: '',
+      campus: [],
+      departments: [],
       email: '',
-      dob: ''
+      dob: '',
+      college: '',
+      department: ''
     }
+  }
+  componentDidMount () {
+    const { campus, departments } = this.state
+    axios
+      .get('http://localhost:3000/api/global/global', {
+        campus,
+        departments
+      })
+      .then(result => {
+        console.log(result)
+        this.setState({ campus:result.data.campus,departments:result.data.departments })
+        console.log(departments)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
   onChange = e => {
     const state = this.state
@@ -27,6 +45,9 @@ class Create extends Component {
   onSelectChange = e => {
     this.setState({ college: e })
   }
+  onDepartmentChange = e => {
+    this.setState({ department: e })
+  }
 
   onSubmit = e => {
     e.preventDefault()
@@ -35,8 +56,8 @@ class Create extends Component {
       regNumber,
       password,
       fullName,
-      college,
-      field,
+      campus,
+      departments,
       email,
       dob
     } = this.state
@@ -45,7 +66,7 @@ class Create extends Component {
       .post('http://localhost:3000/api/auth/register', {
         regNumber,
         password,
-        field,
+        department,
         college,
         email,
         fullName,
@@ -64,8 +85,8 @@ class Create extends Component {
       regNumber,
       password,
       fullName,
-      college,
-      field,
+      campus,
+      departments,
       email,
       dob
     } = this.state
@@ -141,26 +162,32 @@ class Create extends Component {
           </Form.Item>
           <Form.Item>
             <Select
-              defaultValue={'choose'}
-              name='college'
+              defaultValue={'Campus'}
+              name='campus'
               onChange={this.onSelectChange}
               style={{ width: '100%' }}
               size='large'
-            >
-              <Option value='NUll'>Choose</Option>
-              <Option value='Vadapalani'>Vadapalani</Option>
-              <Option value='Ramapuram'>Ramapuram</Option>
-              <Option value='Katankalthur'>Katankalthur</Option>
+            >{this.state.campus.map((b) => (
+              <Option key={b} value={b}>
+                {b}
+              </Option>
+            ))}
             </Select>
           </Form.Item>
           <Form.Item>
-            <Input
+            <Select
+              defaultValue={'Department'}
+              name='campus'
+              onChange={this.onDepartmentChange}
+              style={{ width: '100%' }}
               size='large'
-              name='field'
-              onChange={this.onChange}
-              value={field}
-              placeholder='Department'
-            />
+            >
+              {this.state.departments.map((b) => (
+                <Option key={b} value={b}>
+                  {b}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
           <Form.Item>
             <Input

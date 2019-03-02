@@ -9,7 +9,11 @@ class Board extends React.Component {
     localStorage.removeItem('jwtToken')
     window.location.reload()
   }
-  state = { width: window.innerWidth, height: window.innerHeight }
+  state = {
+    width: window.innerWidth,
+    height: window.innerHeight,
+    collapsed: window.innerWidth < 768
+  }
   componentDidMount () {
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
@@ -22,14 +26,17 @@ class Board extends React.Component {
   updateWindowDimensions = () => {
     this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
+  onCollapse = () => {
+    this.setState({ collapsed: !this.state.collapsed })
+  }
   render () {
-    const { collapsed, onCollapse } = this.props
+    const { collapsed } = this.state
     let { width } = this.state
     return (
       <Sider
         collapsible
         collapsed={collapsed}
-        onCollapse={onCollapse}
+        onCollapse={this.onCollapse}
         collapsedWidth={width < 768 ? 0 : undefined}
         width={200}
         style={{ paddingTop: '20px' }}
@@ -44,7 +51,6 @@ class Board extends React.Component {
               paddingBottom: '44px'
             }}
           >
-            
             <Icon
               style={{ marginRight: !collapsed && '10px' }}
               type='file-text'

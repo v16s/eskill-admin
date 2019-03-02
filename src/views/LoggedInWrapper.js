@@ -4,14 +4,6 @@ import { Layout } from 'antd'
 const { Content } = Layout
 
 export default class LoggedInWrapper extends React.Component {
-  state = {
-    collapsed: window.innerWidth < 768
-  }
-
-  onCollapse = () => {
-    this.setState({ collapsed: !this.state.collapsed })
-  }
-
   render () {
     return (
       <Layout
@@ -25,12 +17,13 @@ export default class LoggedInWrapper extends React.Component {
           .ant-layout-sider-zero-width-trigger {
             z-index: 2 !important;
           }
+          .ant-btn-danger {
+            background-color: #ff4d4f;
+            border-color: #ff4d4f;
+            color: #fff;
+          }
         `}</style>
-        <Navbar
-          collapsed={this.state.collapsed}
-          onCollapse={this.onCollapse}
-          width={this.state.width}
-        />
+        <Navbar />
         <Layout>
           <Content style={{ backgroundColor: '#000d19', padding: '20px' }}>
             {this.props.children}

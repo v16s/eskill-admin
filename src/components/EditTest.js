@@ -31,6 +31,65 @@ class EditTest extends Component {
           select:-internal-autofill-selected {
             box-shadow: inset 0 0 0px 9999px #00284f;
           }
+          .ant-card {
+            background-color: #001f3d;
+            color: #fff;
+            border-color: #001f3d;
+            .ant-pagination-item-link,
+            .ant-pagination-item,
+            .ant-pagination-prev,
+            .ant-pagination-next,
+            .ant-pagination-jump-prev,
+            .ant-pagination-jump-next {
+              background-color: transparent;
+              a {
+                color: #fff;
+              }
+            }
+            .ant-pagination-jump-prev
+              .ant-pagination-item-container
+              .ant-pagination-item-ellipsis,
+            .ant-pagination-jump-next
+              .ant-pagination-item-container
+              .ant-pagination-item-ellipsis {
+              color: #fff;
+            }
+            .ant-pagination-disabled a,
+            .ant-pagination-disabled a:hover {
+              color: #aaa;
+              border-color: #aaa;
+            }
+            & .ant-card-head {
+              border-color: transparent;
+              color: #9ec7ed;
+            }
+            & .student-table .ant-table-bordered table {
+              border-color: transparent;
+              td,
+              tr > td {
+                border-color: transparent;
+                background-color: rgb(0, 13, 25);
+                color: #fff;
+              }
+              .ant-table-row-expand-icon {
+                background: transparent;
+              }
+              th {
+                background-color: #001529;
+                border-color: transparent;
+                color: #fff;
+              }
+              .question-table table {
+                td,
+                tr > td {
+                  background-color: #001529;
+                }
+                th {
+                  background-color: #001f3d;
+                }
+              }
+            }
+          }
         `}</style>
         <div>
           <Search
@@ -63,7 +122,7 @@ class EditTest extends Component {
                     <Button
                       type='primary'
                       onClick={() => {
-                        history.push('/studentregister')
+                        history.push('/register')
                       }}
                       style={{ width: '100%' }}
                     >

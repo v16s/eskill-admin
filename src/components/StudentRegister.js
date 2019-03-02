@@ -1,26 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
   Form,
   Input,
-  Tooltip,
   Icon,
-  Cascader,
   Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
   Layout,
   AutoComplete,
-  Menu,
   DatePicker
 } from 'antd';
-import Password from 'antd/lib/input/Password';
 const { Option } = Select;
-const { Header, Content, Footer } = Layout;
-const AutoCompleteOption = AutoComplete.Option;
 const InputGroup = Input.Group;
 
 class StudentRegister extends Component {
@@ -119,19 +109,45 @@ class StudentRegister extends Component {
     };
 
     return (
-      <Layout>
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'left',
-            minHeight: '300vh'
-          }}
-        >
-          <Form onSubmit={this.onSubmit} className='login-form'>
-            <Form.Item
+        <div>
+        <style jsx global>{`
+          .custom-form .ant-input-affix-wrapper .ant-input-prefix,
+          .ant-input-affix-wrapper .ant-input-suffix {
+            color: #1890ff !important;
+          }
+          .custom-form .ant-input,
+          .custom-form .ant-input:focus,
+          .custom-form .ant-input:hover,
+          .custom-form .ant-select-arrow {
+            background-color: #001f3d !important;
+            border-color: transparent !important;
+            color: #fff !important;
+          }
+          .custom-form .ant-select-selection {
+            background-color: #001f3d !important;
+            color: #fff !important;
+            border-color: transparent !important;
+          }
+          internal-autofill-previewed,
+          input:-internal-autofill-selected,
+          textarea:-internal-autofill-previewed,
+          textarea:-internal-autofill-selected,
+          select:-internal-autofill-previewed,
+          select:-internal-autofill-selected {
+            box-shadow: inset 0 0 0px 9999px #00284f;
+            border-color: transparent !important;
+          }
+          .custom-form .ant-form-item-label label {
+            color: #ddd !important;
+          }
+        `}</style>
+          <Form
+          style={{ padding: 0, maxWidth: 500 }}
+          onSubmit={this.onSubmit}
+          className='custom-form'
+          >   
+          <Form.Item
               label='Full Name Of the Student:'
-              style={{ color: 'rgba(0,0,0,.25)', fontSize: '24' }}
             >
               <Input
                 size='large'
@@ -185,9 +201,7 @@ class StudentRegister extends Component {
               />
             </Form.Item>
             <Form.Item style={{ width: 400 }} label='Date Of Birth:'>
-              {getFieldDecorator('date-picker', config)(
-                <DatePicker setFieldsValue={dob} />
-              )}
+               <DatePicker setFieldsValue={dob} />
             </Form.Item>
             <Form.Item label='E-mail'>
               <Input
@@ -231,8 +245,6 @@ class StudentRegister extends Component {
             </Form.Item>
           </Form>
         </div>
-        <Footer style={{ textAlign: 'center' }} />
-      </Layout>
     );
   }
 }

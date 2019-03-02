@@ -10,8 +10,6 @@
         "libraryName": "antd",
         "style": true
       }
-      // "import",
-      // { "libraryName": "ant-design-pro",  "style": true }
     ],
     [
       "module-resolver",

@@ -203,6 +203,11 @@ export default class StudentTable extends React.Component {
         dataIndex: 'progress',
         render: d => <Progress percent={d} showInfo={false} />,
         width: '60%'
+      },
+      {
+        title: ' ',
+        render: e => <Button type='danger' >Cancel</Button>,
+
       }
     ]
 
@@ -317,6 +322,13 @@ export default class StudentTable extends React.Component {
     })
     return (
       <div>
+        <Button
+          onClick={this.modal}
+          type='primary'
+          style={{ marginBottom: 16 }}
+        >
+          Add a student
+        </Button>
         <Modal
           title='Enter the number of students you want to add'
           visible={this.state.visible}
@@ -333,7 +345,6 @@ export default class StudentTable extends React.Component {
         >
           Add a student
         </Button>
-
         <Table
           components={components}
           rowClassName={() => 'editable-row'}

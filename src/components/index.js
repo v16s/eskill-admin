@@ -8,7 +8,7 @@ import StudentRegister from './StudentRegister'
 import EditTest from './EditTest'
 import StudentTable from './StudentTable'
 import Header from './Header'
-
+import LoadScreen from './LoadScreen'
 export {
   history,
   Login,
@@ -19,5 +19,6 @@ export {
   StudentRegister,
   EditTest,
   StudentTable,
-  Header
+  Header,
+  LoadScreen
 }

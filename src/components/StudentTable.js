@@ -165,6 +165,7 @@ class SessionTable extends React.Component {
           </Col>
         </Row>
         <Table
+        className='question-table'
           components={this.components}
           rowClassName={() => 'editable-row'}
           bordered
@@ -338,14 +339,9 @@ export default class StudentTable extends React.Component {
         >
           <InputNumber value={this.state.n} onChange={this.onInputChange} />
         </Modal>
-        <Button
-          onClick={this.modal}
-          type='primary'
-          style={{ marginBottom: 16 }}
-        >
-          Add a student
-        </Button>
-        <Table
+      
+        {dataSource.length > 0 && <Table
+        className='student-table'
           components={components}
           rowClassName={() => 'editable-row'}
           bordered
@@ -361,7 +357,7 @@ export default class StudentTable extends React.Component {
               recKey={a.key}
             />
           )}
-        />
+        />}
       </div>
     )
   }

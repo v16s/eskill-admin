@@ -4,7 +4,7 @@ import history from './history'
 import AdminCard from './AdminCard'
 import CreateTest from './CreateTest'
 import Navbar from './Navbar'
-import StudentRegister from './StudentRegister'
+import FCRegister from './FCRegister'
 import EditTest from './EditTest'
 import StudentTable from './StudentTable'
 import Header from './Header'
@@ -16,7 +16,7 @@ export {
   AdminCard,
   CreateTest,
   Navbar,
-  StudentRegister,
+  FCRegister,
   EditTest,
   StudentTable,
   Header

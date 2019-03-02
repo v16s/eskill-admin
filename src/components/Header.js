@@ -20,7 +20,7 @@ export default class MainHeader extends React.Component {
 
     if (width < 768) {
       return (
-        <Header style={{ background: '#fff', padding: 0 }}>
+        <Header style={{ background: '#001f3d', padding: 0 }}>
           <Icon
             style={{ padding: '0 24px' }}
             className='trigger'

@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Form, Input, Button, Select } from 'antd'
+import { history } from 'components'
 const Option = Select.Option
 
 class CreateTest extends React.Component {
@@ -40,7 +41,11 @@ class CreateTest extends React.Component {
         testID,
         number
       })
-      .then(result => {})
+      .then(result => {
+        if (result.data.success) {
+          history.push('/')
+        }
+      })
       .catch(err => {
         console.log(err)
       })

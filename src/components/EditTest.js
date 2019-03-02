@@ -11,6 +11,27 @@ class EditTest extends Component {
   render () {
     return (
       <div>
+        <style jsx global>{`
+          .ant-input-affix-wrapper .ant-input-search-icon,
+          .ant-input-affix-wrapper .ant-input-suffix {
+            color: #1890ff !important;
+          }
+          .ant-input,
+          .ant-input:focus,
+          .ant-input:hover {
+            background-color: #001f3d !important;
+            border-color: transparent !important;
+            color: #fff !important;
+          }
+          internal-autofill-previewed,
+          input:-internal-autofill-selected,
+          textarea:-internal-autofill-previewed,
+          textarea:-internal-autofill-selected,
+          select:-internal-autofill-previewed,
+          select:-internal-autofill-selected {
+            box-shadow: inset 0 0 0px 9999px #00284f;
+          }
+        `}</style>
         <div>
           <Search
             placeholder='input search text'

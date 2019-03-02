@@ -21,13 +21,17 @@ export default class LoggedInWrapper extends React.Component {
           minHeight: '100vh'
         }}
       >
+        <style jsx global>{`
+          .ant-layout-sider-zero-width-trigger {
+            z-index: 2 !important;
+          }
+        `}</style>
         <Navbar
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
           width={this.state.width}
         />
         <Layout>
-          <Header onCollapse={this.onCollapse} collapsed={this.state} />
           <Content style={{ backgroundColor: '#000d19', padding: '20px' }}>
             {this.props.children}
           </Content>

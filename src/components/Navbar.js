@@ -65,6 +65,7 @@ class Board extends React.Component {
           defaultOpenKeys={['sub1', 'sub2', 'sub3']}
           style={{ height: '100%', borderRight: 0, paddingBottom: '100px' }}
         >
+
           <Menu.Item
             key='home'
             onClick={() => {
@@ -85,6 +86,7 @@ class Board extends React.Component {
             <Icon type='user-add' />
             <span>Add Faculty/Coordinator</span>
           </Menu.Item>
+
           <Menu.Item
             key='logout'
             onClick={e => {
@@ -107,6 +109,6 @@ class Board extends React.Component {
       </Sider>
     )
   }
-}
+
 
 export default Board

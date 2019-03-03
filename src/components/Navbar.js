@@ -147,6 +147,16 @@ class Board extends React.Component {
               <Icon type='user-add' />
               <span>Add Student/Faculty</span>
             </Menu.Item>
+            
+            <Menu.Item
+              key='5'
+              onClick={() => {
+                history.push('/addcourse')
+              }}
+            >
+              <Icon type="folder-add" />
+              <span>Add Course</span>
+            </Menu.Item>
             <Menu.Item
               key='logout'
               onClick={e => {

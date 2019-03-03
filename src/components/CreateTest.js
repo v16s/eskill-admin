@@ -143,7 +143,7 @@ class CreateTest extends React.Component {
               placeholder='Total Time'
             />
           </Form.Item>
-          <Form.Item label='Test Time'>
+          <Form.Item label='Total Students'>
             <Input
               size='large'
               name='number'

@@ -9,8 +9,10 @@ import {
   Col,
   Modal,
   InputNumber,
-  Progress
+  Progress,
+  Layout
 } from 'antd'
+import CourseTable from './StudentTable';
 const FormItem = Form.Item
 const EditableContext = React.createContext(undefined)
 
@@ -154,16 +156,7 @@ class SessionTable extends React.Component {
     const { dataSource, label } = this.props
     return (
       <div>
-        <Row gutter={16}>
-          <Col md={18}>
-            <Input placeholder='Basic usage' />
-          </Col>
-          <Col md={6} style={{ display: 'flex', justifyContent: 'center' }}>
-            <Button type='primary' style={{ marginBottom: 16 }}>
-              Change Password
-            </Button>
-          </Col>
-        </Row>
+      
         <Table
           components={this.components}
           rowClassName={() => 'editable-row'}
@@ -183,20 +176,113 @@ class SessionTable extends React.Component {
     )
   }
 }
-export default class CourseTable extends React.Component {
+class Course extends React.Component {
+  cols
+  constructor (props) {
+    super(props)
+    this.state = {
+      sessionCount: 0,
+      sessionSource: [],
+      visible: false,
+      confirmLoading: false
+    }
+    this.cols = [
+      {
+        title: 'Course',
+        dataIndex: 'name',
+        width: '80%'
+      },
+      {
+        title: ' ',
+        render: e =>  <Button type='danger'>Delete</Button>
+      }
+    ]
+  }
+  columns = () =>
+    this.cols.map(col => {
+      if (!col.editable) {
+        return col
+      }
+      return {
+        ...col,
+        onCell: record => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+          handleSave: row => {
+            this.props.handleSave(row, this.props.label)
+          }
+        })
+      }
+    })
+  components = {
+    body: {
+      row: EditableFormRow,
+      cell: EditableCell
+    }
+  }
+  handleAdd = () => {
+    let { sessionSource } = this.state
+    { 
+      this.setState(
+        {
+          confirmLoading: true
+        },
+        () => {
+            sessionSource.push([])
+            for (let i = 0; i < 100; i++) {
+              sessionSource[sessionSource.length - 1].push({
+                key: 'child' + (sessionSource.length - 1) + i,
+                name: `Question ${i}`
+              })
+            }
+          this.setState(
+            {
+              sessionSource,
+            },
+            () => {
+              this.setState({ visible: false, confirmLoading: false })
+            }
+          )
+        }
+      )
+  }}
+  render () {
+    const { dataSource,sessionSource, label } = this.props
+    return (
+      <Layout
+      onClick={this.handleAdd}>
+      <div>
+        <Table
+          components={this.components}
+          rowClassName={() => 'editable-row'}
+          bordered
+          dataSource={dataSource}
+          columns={this.columns()}
+          expandedRowRender={(a, key) => (
+            <SessionTable
+              dataSource={sessionSource[key]}
+              label={key}
+              recKey={a.key}
+            />
+          )}
+          
+        />
+       </div> 
+      </Layout>
+    )
+  }
+}
+class AddCourse extends React.Component {
   columns
   constructor (props) {
     super(props)
     this.columns = [
       {
-        title: 'ID',
+        title: 'Branch',
         dataIndex: 'name',
-        editable: true
-      },
-      {
-        title: 'Password',
-        dataIndex: 'pass',
-        editable: true
+        editable: false
       },
       {
         title: 'Progress',
@@ -206,16 +292,26 @@ export default class CourseTable extends React.Component {
       },
       {
         title: ' ',
-        render: e => <Button type='danger' >End</Button>,
+        render: e => <Button type='danger' >Cancel</Button>,
 
       }
     ]
 
     this.state = {
-      dataSource: [],
-      count: 0,
+      dataSource: [{
+        key: 1,
+        name: `ECE`,
+        progress: 35
+      },
+      { key: 2,
+        name: `CSE`,
+        progress: 35},
+      { key: 3,
+        name: `MECH`,
+        progress: 35}],
       sessionCount: 0,
       sessionSource: [],
+      courses:[],
       visible: false,
       n: 0,
       confirmLoading: false
@@ -228,38 +324,26 @@ export default class CourseTable extends React.Component {
   }
 
   handleAdd = () => {
-    let { count, dataSource, sessionSource, n } = this.state
-    if (n > 0) {
+    let { count, dataSource,courses, n } = this.state
+    { let e =  3
+      if (e > 0) {
       this.setState(
         {
           confirmLoading: true
         },
         () => {
-          for (let j = 1; j <= n; j++, count++) {
-            const newData = {
-              key: count,
-              name: `Student ${j}`,
-              pass: Math.random()
-                .toString(36)
-                .replace(/[^a-z]+/g, '')
-                .substr(0, 5),
-              progress: 35
-            }
-
-            sessionSource.push([])
-            for (let i = 0; i < 100; i++) {
-              sessionSource[sessionSource.length - 1].push({
-                key: 'child' + (sessionSource.length - 1) + i,
-                name: `Question ${i}`
+            courses.push([])
+            for (let i = 1; i < 8; i++) {
+              courses[courses.length - 1].push({
+                key: 'child' + (courses.length - 1) + i,
+                name: `Course ${i}`
               })
             }
-            dataSource.push(newData)
-          }
           this.setState(
             {
               dataSource,
               count,
-              sessionSource
+              courses
             },
             () => {
               this.setState({ visible: false, confirmLoading: false })
@@ -268,7 +352,7 @@ export default class CourseTable extends React.Component {
         }
       )
     }
-  }
+  }}
 
   handleSave = row => {
     const newData = [...this.state.dataSource]
@@ -288,6 +372,13 @@ export default class CourseTable extends React.Component {
       sessionSource
     })
   }
+  handleCourseDelete = (row, key) => {
+    let { courses} = this.state
+    courses[key] = courses[key].filter(item => item.key !== row)
+    this.setState({
+      courses
+    })
+  }
   handleCancel = () => {
     this.setState({ visible: false })
   }
@@ -298,7 +389,7 @@ export default class CourseTable extends React.Component {
     this.setState({ visible: true })
   }
   render () {
-    const { dataSource, sessionSource } = this.state
+    const { dataSource, sessionSource,courses } = this.state
     const components = {
       body: {
         row: EditableFormRow,
@@ -322,22 +413,10 @@ export default class CourseTable extends React.Component {
     })
     return (
       <div>
-        <Button
-          onClick={this.modal}
-          type='primary'
-          style={{ marginBottom: 16 }}
+        <Layout
+        onLoad={this.handleAdd}
         >
-          Add a student
-        </Button>
-        <Modal
-          title='Enter the number of students you want to add'
-          visible={this.state.visible}
-          onOk={this.handleAdd}
-          confirmLoading={this.state.confirmLoading}
-          onCancel={this.handleCancel}
-        >
-          <InputNumber value={this.state.n} onChange={this.onInputChange} />
-        </Modal>
+        <Form>
         <Table
           components={components}
           rowClassName={() => 'editable-row'}
@@ -345,17 +424,17 @@ export default class CourseTable extends React.Component {
           dataSource={dataSource}
           columns={columns}
           expandedRowRender={(a, key) => (
-            <SessionTable
-              dataSource={sessionSource[key]}
-              handleAdd={this.handleSessionAdd}
-              handleDelete={this.handleDelete}
-              handleSave={this.handleSessionSave}
+            <Course
+              dataSource={courses[key]}
               label={key}
               recKey={a.key}
             />
           )}
         />
+        </Form>
+        </Layout>
       </div>
     )
   }
 }
+export default AddCourse

@@ -11,7 +11,7 @@ class EditTest extends Component {
   render () {
     return (
       <div>
-        <style jsx global>{`
+        <style jsx global>{/* CSS */ `
           .ant-input-affix-wrapper .ant-input-search-icon,
           .ant-input-affix-wrapper .ant-input-suffix {
             color: #1890ff !important;
@@ -31,10 +31,22 @@ class EditTest extends Component {
           select:-internal-autofill-selected {
             box-shadow: inset 0 0 0px 9999px #00284f;
           }
+
+          .ant-modal-content {
+            background-color: #000d19;
+          }
+          .ant-modal-footer {
+            border-color: transparent;
+          }
+          .ant-modal-body {
+            border-color: transparent;
+          }
+
           .ant-card {
             background-color: #001f3d;
             color: #fff;
             border-color: #001f3d;
+
             .ant-pagination-item-link,
             .ant-pagination-item,
             .ant-pagination-prev,

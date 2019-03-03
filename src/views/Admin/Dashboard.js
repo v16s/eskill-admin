@@ -7,20 +7,41 @@ const { Search } = Input
 export default class Dashboard extends Component {
   constructor () {
     super()
-    this.state = { tests: [] }
+    this.state = {
+      tests: [],
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
   }
   componentDidMount () {
+    console.log('hello')
     axios
       .get('http://localhost:3000/api/admin/tests')
       .then(res => {
+        console.log(res)
         this.setState({ tests: res.data.tests })
       })
       .catch(err => {
         console.log(err)
       })
+      this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
   render () {
-    // if(this.props.level === 1){
+    let { width } = this.state
+    let span = [parseInt(width / 275) - 1, parseInt(width / 275)].includes(0)
+      ? 1
+      : parseInt(width / 275) % 2 == 0
+        ? parseInt(width / 275)
+        : parseInt(width / 275) - 1
     return (
       <div>
         <style jsx global>{`
@@ -44,7 +65,6 @@ export default class Dashboard extends Component {
             box-shadow: inset 0 0 0px 9999px #00284f;
           }
           .ant-card {
-            max-width: 350px;
             height: 350px;
             width: 100%;
             background-color: #001f3d !important;
@@ -62,6 +82,11 @@ export default class Dashboard extends Component {
               border-color: transparent !important;
               color: #9ec7ed !important;
             }
+            @media (max-width: 990px) {
+              .ant-row-flex {
+                flex-direction: column !important;
+              }
+            }
           }
         `}</style>
         <Search
@@ -69,12 +94,12 @@ export default class Dashboard extends Component {
           onSearch={value => console.log(value)}
           style={{ width: '100%' }}
         />
-        {chunk([0, ...this.state.tests], 3).map((r, i) => (
+        {chunk([0, ...this.state.tests], span).map((r, i) => (
           <Row key={'row-' + i} gutter={16} type='flex'>
             {r.map(c => (
               <Col
-                key={'col' + c}
-                md={8}
+                key={'col' + (c === 0 ? c : c.testID)}
+                span={24 / span}
                 style={{
                   display: 'flex',
                   flexDirection: 'row',

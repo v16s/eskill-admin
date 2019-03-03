@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import Router from './router'
-import { history } from './components'
+import { history, LoadScreen } from './components'
 import axios from 'axios'
 class Root extends React.Component {
   state = { loggedIn: undefined, details: {} }
@@ -28,7 +28,9 @@ class Root extends React.Component {
   render () {
     return this.state.loggedIn !== undefined ? (
       <Router login={this.login} redirect={this.redirect} {...this.state} />
-    ) : null
+    ) : (
+      <LoadScreen />
+    )
   }
 }
 render(<Root />, document.getElementById('root'))

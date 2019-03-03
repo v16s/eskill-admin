@@ -4,13 +4,11 @@ import history from './history'
 import AdminCard from './AdminCard'
 import CreateTest from './CreateTest'
 import Navbar from './Navbar'
-import AddCourse from './AddCourse'
-import StudentRegister from './StudentRegister'
+import FCRegister from './FCRegister'
 import EditTest from './EditTest'
 import StudentTable from './StudentTable'
 import Header from './Header'
-
-
+import LoadScreen from './LoadScreen'
 export {
   history,
   Login,
@@ -18,9 +16,9 @@ export {
   AdminCard,
   CreateTest,
   Navbar,
-  StudentRegister,
+  FCRegister,
   EditTest,
   StudentTable,
-  AddCourse,
-  Header
+  Header,
+  LoadScreen
 }

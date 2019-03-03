@@ -86,13 +86,6 @@ class Board extends React.Component {
             <Icon type='user-add' />
             <span>Add Faculty/Coordinator</span>
           </Menu.Item>
-
-          <Menu.Item
-            key='logout'
-            onClick={e => {
-              this.logout()
-            }}
-          >
           <Menu.Item
               key='5'
               onClick={() => {
@@ -102,6 +95,12 @@ class Board extends React.Component {
               <Icon type="folder-add" />
               <span>Add Course</span>
             </Menu.Item>
+            <Menu.Item
+            key='logout'
+            onClick={e => {
+              this.logout()
+            }}
+          >
             <Icon type='logout' />
             <span>Logout</span>
           </Menu.Item>
@@ -109,6 +108,6 @@ class Board extends React.Component {
       </Sider>
     )
   }
-
+}
 
 export default Board

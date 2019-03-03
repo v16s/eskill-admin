@@ -6,6 +6,7 @@ import CreateTest from './CreateTest'
 import Navbar from './Navbar'
 import FCRegister from './FCRegister'
 import EditTest from './EditTest'
+import AddCourse from './AddCourse'
 import StudentTable from './StudentTable'
 import Header from './Header'
 import LoadScreen from './LoadScreen'
@@ -19,6 +20,7 @@ export {
   FCRegister,
   EditTest,
   StudentTable,
+  AddCourse,
   Header,
   LoadScreen
 }

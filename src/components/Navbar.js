@@ -65,26 +65,17 @@ class Board extends React.Component {
           defaultOpenKeys={['sub1', 'sub2', 'sub3']}
           style={{ height: '100%', borderRight: 0, paddingBottom: '100px' }}
         >
-            <Menu.Item
-              key='home'
-              onClick={() => {
-                history.push('/')
-              }}
-            >
-              <Icon type='home' />
-              <span>Home</span>
-            </Menu.Item>
 
-            <Menu.Item
-              key='create'
-              onClick={() => {
-                history.push('/createtest')
-              }}
-            >
-              <Icon type='schedule' />
-              <span>Create Test</span>
-            </Menu.Item>
-            <Menu.Item
+          <Menu.Item
+            key='home'
+            onClick={() => {
+              history.push('/')
+            }}
+          >
+            <Icon type='home' />
+            <span>Home</span>
+          </Menu.Item>
+          <Menu.Item
             key='5'
             key=''
             onClick={() => {
@@ -95,8 +86,14 @@ class Board extends React.Component {
             <Icon type='user-add' />
             <span>Add Faculty/Coordinator</span>
           </Menu.Item>
-            
-            <Menu.Item
+
+          <Menu.Item
+            key='logout'
+            onClick={e => {
+              this.logout()
+            }}
+          >
+          <Menu.Item
               key='5'
               onClick={() => {
                 history.push('/addcourse')
@@ -105,19 +102,12 @@ class Board extends React.Component {
               <Icon type="folder-add" />
               <span>Add Course</span>
             </Menu.Item>
-            <Menu.Item
-              key='logout'
-              onClick={e => {
-                this.logout()
-              }}
-            >
-              <Icon type='logout' />
-              <span>Logout</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
-      )
-    }
+            <Icon type='logout' />
+            <span>Logout</span>
+          </Menu.Item>
+        </Menu>
+      </Sider>
+    )
   }
 
 

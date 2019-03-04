@@ -2,6 +2,8 @@ import React from 'react'
 import { Button, Table, Modal, InputNumber } from 'antd'
 import { EditableCell, EditableFormRow } from './Editable'
 import axios from 'axios'
+import FacultyList from './FacultyList'
+import { reject } from 'lodash'
 export default class StudentTable extends React.Component {
   constructor (props) {
     super(props)
@@ -14,22 +16,43 @@ export default class StudentTable extends React.Component {
       },
       {
         title: ' ',
-        render: e => <Button type='danger'>Delete</Button>
+        render: record => (
+          <Button
+            onClick={e => {
+              this.handleDelete(record)
+            }}
+            type='danger'
+          >
+            Delete
+          </Button>
+        )
       }
     ]
 
     this.state = {
       dataSource: [],
-      count: 0,
-      sessionCount: 0,
-      sessionSource: [],
       visible: false,
       n: 0,
-      confirmLoading: false
+      confirmLoading: false,
+      length: -1
     }
   }
 
-  handleDelete = key => {}
+  handleDelete = record => {
+    axios
+      .post('http://localhost:3000/api/admin/removefaculty', {
+        regNumber: record.regNumber,
+        testID: this.props.testID
+      })
+      .then(res => {
+        this.setState({
+          length: this.state.length - 1,
+          dataSource: reject(this.state.dataSource, {
+            regNumber: res.data.user.regNumber
+          })
+        })
+      })
+  }
 
   handleAdd = () => {}
 
@@ -45,13 +68,28 @@ export default class StudentTable extends React.Component {
     this.setState({ visible: true })
   }
   componentDidMount () {
-    axios.get('http://localhost:3000/api/admin/faculties').then(res => {
-      if (res.data.success) {
-        this.setState({ dataSource: res.data.faculties })
-      }
+    axios
+      .get('http://localhost:3000/api/admin/faculties/' + this.props.testID)
+      .then(res => {
+        if (res.data.success) {
+          this.setState({
+            dataSource: res.data.faculties,
+            length: res.data.faculties.length
+          })
+        }
+      })
+  }
+  update = dataSource => {
+    this.setState({ dataSource })
+  }
+  push = item => {
+    const { dataSource } = this.state
+    this.setState({
+      dataSource: [...dataSource, item],
+      visible: false,
+      length: dataSource.length + 1
     })
   }
-
   render () {
     const { dataSource } = this.state
     const components = {
@@ -77,22 +115,16 @@ export default class StudentTable extends React.Component {
     })
     return (
       <div>
-        <Button
-          onClick={this.modal}
-          type='primary'
-          style={{ marginBottom: 16 }}
-        >
-          Add a student
-        </Button>
-        <Modal
+        <FacultyList
           visible={this.state.visible}
-          onOk={this.handleAdd}
+          handleAdd={this.handleAdd}
           confirmLoading={this.state.confirmLoading}
-          onCancel={this.handleCancel}
-          closable={false}
-        >
-          <InputNumber value={this.state.n} onChange={this.onInputChange} />
-        </Modal>
+          handleCancel={this.handleCancel}
+          testID={this.props.testID}
+          push={this.push}
+          modal={this.modal}
+          length={this.state.length} // So that the modal refreshes everytime a faculty is removed
+        />
         {dataSource.length > 0 && (
           <Table
             className='student-table'

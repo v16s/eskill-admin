@@ -2,7 +2,7 @@ import React from 'react'
 import { Input, Button, Table, Popconfirm, Form, Modal } from 'antd'
 import { reject } from 'lodash'
 import axios from 'axios'
-import { EditableCell, EditableFormRow } from './editable'
+import { EditableCell, EditableFormRow } from './Editable'
 import CourseTable from './CourseTable'
 
 export default class BranchTable extends React.Component {

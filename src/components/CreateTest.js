@@ -13,8 +13,15 @@ class CreateTest extends React.Component {
       questions: '',
       time: '',
       number: '',
-      testID: ''
+      testID: '',
+      dataSource: []
     }
+  }
+  componentDidMount () {
+    const dataSource = this.state
+    axios.get('http://localhost:3000/api/admin/branches').then(res => {
+      this.setState({ dataSource: res.data.branches })
+    })
   }
   onBranchChange = e => {
     this.setState({ branch: e })
@@ -51,7 +58,15 @@ class CreateTest extends React.Component {
       })
   }
   render () {
-    const { branch, course, questions, time, testID, number } = this.state
+    const {
+      branch,
+      course,
+      questions,
+      time,
+      testID,
+      number,
+      dataSource
+    } = this.state
     return (
       <div>
         <style jsx global>{`
@@ -102,30 +117,36 @@ class CreateTest extends React.Component {
           </Form.Item>
           <Form.Item label='Branch'>
             <Select
-              defaultValue={'choose'}
+              defaultValue={'Choose Branch...'}
               name='branch'
               onChange={this.onBranchChange}
               size='large'
               style={{ width: '100%' }}
             >
-              <Option value='NUll'>Choose</Option>
-              <Option value='CSE'>CSE</Option>
-              <Option value='ECE'>ECE</Option>
-              <Option value='MECH'>MECH</Option>
+              {this.state.dataSource.map(b => (
+                <Option key={b.name} value={b.name}>
+                  {b.name}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item label='Course'>
             <Select
-              defaultValue={'choose'}
+              defaultValue={'Choose Course...'}
               name='course'
               onChange={this.onSelectChange}
               size='large'
               style={{ width: '100%' }}
             >
-              <Option value='NUll'>Choose</Option>
-              <Option value='Something'>Something</Option>
-              <Option value='Som'>Som</Option>
-              <Option value='somet'>Somet</Option>
+              {this.state.dataSource.map(function (b) {
+                if (b.name == branch) {
+                  return b.courses.map(c => (
+                    <Option key={c.name} value={c.name}>
+                      {c.name}
+                    </Option>
+                  ))
+                }
+              })}
             </Select>
           </Form.Item>
           <Form.Item label='Questions'>

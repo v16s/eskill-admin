@@ -1,28 +1,16 @@
 import React from 'react'
-import { Button, Table, Modal, InputNumber, Progress } from 'antd'
+import { Button, Table, Modal, InputNumber } from 'antd'
 import { EditableCell, EditableFormRow } from './Editable'
-import QuestionTable from './QuestionTable'
 import axios from 'axios'
 export default class StudentTable extends React.Component {
-  columns
   constructor (props) {
     super(props)
     this.columns = [
       {
         title: 'ID',
-        dataIndex: 'username',
-        editable: true
-      },
-      {
-        title: 'Password',
-        dataIndex: 'password',
-        editable: true
-      },
-      {
-        title: 'Progress',
-        dataIndex: 'progress',
-        render: d => <Progress percent={d} showInfo={false} />,
-        width: '60%'
+        dataIndex: 'regNumber',
+        editable: true,
+        width: '80%'
       },
       {
         title: ' ',
@@ -57,10 +45,9 @@ export default class StudentTable extends React.Component {
     this.setState({ visible: true })
   }
   componentDidMount () {
-    let { testID } = this.props
-    axios.get('http://localhost:3000/api/admin/reports/' + testID).then(res => {
+    axios.get('http://localhost:3000/api/admin/faculties').then(res => {
       if (res.data.success) {
-        this.setState({ dataSource: res.data.reports })
+        this.setState({ dataSource: res.data.faculties })
       }
     })
   }
@@ -106,7 +93,6 @@ export default class StudentTable extends React.Component {
         >
           <InputNumber value={this.state.n} onChange={this.onInputChange} />
         </Modal>
-
         {dataSource.length > 0 && (
           <Table
             className='student-table'
@@ -116,12 +102,6 @@ export default class StudentTable extends React.Component {
             dataSource={dataSource}
             columns={columns}
             pagination={dataSource.length > 10}
-            expandedRowRender={record => (
-              <QuestionTable
-                dataSource={record.questions}
-                label={this.props.testID}
-              />
-            )}
           />
         )}
       </div>

@@ -19,6 +19,13 @@ class AddCourse extends React.Component {
             border-color: transparent !important;
             color: #fff !important;
           }
+          .ant-input-number,
+          .ant-input-number:focus,
+          .ant-input-number:hover {
+            background-color: #001f3d !important;
+            border-color: transparent !important;
+            color: #fff !important;
+          }
           internal-autofill-previewed,
           input:-internal-autofill-selected,
           textarea:-internal-autofill-previewed,

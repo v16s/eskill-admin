@@ -8,6 +8,7 @@ import FCRegister from './FCRegister'
 import EditTest from './EditTest'
 import AddCourse from './AddCourse'
 import StudentTable from './StudentTable'
+import FacultyTable from './FacultyTable'
 import Header from './Header'
 import LoadScreen from './LoadScreen'
 export {
@@ -22,5 +23,6 @@ export {
   StudentTable,
   AddCourse,
   Header,
-  LoadScreen
+  LoadScreen,
+  FacultyTable
 }

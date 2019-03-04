@@ -2,13 +2,13 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { FCRegister, EditTest, CreateTest, QuestionPg } from 'components'
 import Dashboard from './Dashboard'
-import { AddCourse } from '../../components';
+import { AddCourse } from '../../components'
 export default ({ login, redirect }) => (
   <Switch>
     <Route path='/register' component={FCRegister} />
     <Route
       path='/test/:tid'
-      component={props => <EditTest {...props.match.params} />}
+      component={props => <EditTest tid={props.match.params.tid} />}
     />
     <Route path='/createTest' component={CreateTest} />
     <Route path='/addCourse' component={AddCourse} />

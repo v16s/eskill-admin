@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { history, StudentTable } from 'components'
+import { history, StudentTable, FacultyTable } from 'components'
 import { Form, Input, Button, Card, Row, Col } from 'antd'
 const Search = Input.Search
 
@@ -9,6 +9,7 @@ class EditTest extends Component {
   }
 
   render () {
+    let { tid } = this.props
     return (
       <div>
         <style jsx global>{/* CSS */ `
@@ -31,18 +32,62 @@ class EditTest extends Component {
           select:-internal-autofill-selected {
             box-shadow: inset 0 0 0px 9999px #00284f;
           }
-
-          .ant-modal-content {
-            background-color: #000d19;
+          .ant-input,
+          .ant-input:focus,
+          .ant-input:hover {
+            background-color: #001f3d !important;
+            border-color: transparent !important;
+            color: #fff !important;
           }
-          .ant-modal-footer {
-            border-color: transparent;
+          internal-autofill-previewed,
+          input:-internal-autofill-selected,
+          textarea:-internal-autofill-previewed,
+          textarea:-internal-autofill-selected,
+          select:-internal-autofill-previewed,
+          select:-internal-autofill-selected {
+            box-shadow: inset 0 0 0px 9999px #00284f;
           }
-          .ant-modal-body {
-            border-color: transparent;
+          .ant-modal {
+            &-content {
+              background-color: #000d19;
+            }
+            &-footer {
+              border-color: transparent;
+            }
+            &-body {
+              border-color: transparent;
+            }
+            .ant-btn {
+              background-color: #001f3d;
+              border-color: #001f3d;
+              color: #fff;
+            }
+            .ant-btn-primary.ant-btn {
+              background-color: #1890ff;
+              border-color: #1890ff;
+            }
           }
-
           .ant-card {
+            .ant-modal {
+              &-content {
+                background-color: #000d19;
+              }
+              &-footer {
+                border-color: transparent;
+              }
+              &-body {
+                border-color: transparent;
+              }
+              .ant-btn {
+                background-color: #001f3d;
+                border-color: #001f3d;
+                color: #fff;
+              }
+              .ant-btn-primary.ant-btn {
+                background-color: #1890ff;
+                border-color: #1890ff;
+              }
+            }
             background-color: #001f3d;
             color: #fff;
             border-color: #001f3d;
@@ -122,7 +167,7 @@ class EditTest extends Component {
           >
             <Form.Item>
               <Card style={{ width: '100%' }} title='Students Assigned'>
-                <StudentTable />
+                <StudentTable testID={tid} />
               </Card>
             </Form.Item>
             <Form.Item>
@@ -143,7 +188,7 @@ class EditTest extends Component {
                   </div>
                 }
               >
-                <StudentTable />
+                <FacultyTable />
               </Card>
             </Form.Item>
             <Form.Item>
@@ -160,7 +205,7 @@ class EditTest extends Component {
                 >
                   <Row gutter={16} style={{ width: '100%' }}>
                     <Col md={4}>Test ID</Col>
-                    <Col md={4}>Test Name</Col>{' '}
+                    <Col md={4}>Test Name</Col>
                   </Row>
                   <Button size='large' type='danger'>
                     Abort
@@ -175,4 +220,4 @@ class EditTest extends Component {
   }
 }
 
-export default Form.create()(EditTest)
+export default EditTest

@@ -5,6 +5,7 @@ const { Content } = Layout
 
 export default class LoggedInWrapper extends React.Component {
   render () {
+   console.log(this.props.level)
     return (
       <Layout
         style={{
@@ -23,7 +24,7 @@ export default class LoggedInWrapper extends React.Component {
             color: #fff;
           }
         `}</style>
-        <Navbar />
+        <Navbar lvl={this.props.level} />
         <Layout>
           <Content style={{ backgroundColor: '#000d19', padding: '20px' }}>
             {this.props.children}

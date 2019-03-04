@@ -15,6 +15,7 @@ class Board extends React.Component {
     collapsed: window.innerWidth < 768
   }
   componentDidMount () {
+    console.log('level:'+ this.props.lvl)
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
   }

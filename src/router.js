@@ -5,7 +5,9 @@ import { history, Login, Register } from './components'
 const AuthRoutes = props => {
   switch (props.level) {
     case 0:
-      return <Admin {...props} />
+     { return <Admin {...props} />}
+    //case 1:
+    //{ return <Coordinator {...props}>}
   }
 }
 export default ({ loggedIn, login, details, redirect }) => (

@@ -86,17 +86,6 @@ class FCRegister extends Component {
         sm: { span: 16 }
       }
     }
-    const config = {
-      rules: [
-        {
-          type: 'object',
-          required: true,
-          message: 'Please select time!',
-          value: dob
-        }
-      ]
-    }
-
     return (
       <div>
         <style jsx global>{`

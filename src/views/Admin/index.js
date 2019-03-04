@@ -1,8 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { FCRegister, EditTest, CreateTest, QuestionPg } from 'components'
+import { FCRegister, EditTest, CreateTest, QuestionPg,AddCourse } from 'components'
 import Dashboard from './Dashboard'
-import { AddCourse } from '../../components'
 export default ({ login, redirect }) => (
   <Switch>
     <Route path='/register' component={FCRegister} />

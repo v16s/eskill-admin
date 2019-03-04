@@ -59,21 +59,38 @@ export default class StudentTable extends React.Component {
       })
   }
 
-  handleAdd = () => {}
+  handleAdd = () => {
+    let { n: number } = this.state
+    let { testID } = this.props
+    this.setState({ confirmLoading: true }, () => {
+      axios
+        .post('http://localhost:3000/api/admin/addstudent', {
+          testID,
+          number
+        })
+        .then(res => {
+          if (res.data.success == true) {
+            this.fetchStudents('m')
+          }
+        })
+    })
+  }
 
-  handleSave = row => {
-    console.log(row)
-    // axios
-    //   .post('http://localhost:3000/api/admin/updatepassword', {
-    //     username
-    //   })
-    //   .then(res => {
-    //     if (res.data.success == true) {
-    //       this.setState({
-    //         dataSource: reject(this.state.dataSource, { username })
-    //       })
-    //     }
-    //   })
+  handleSave = (_val, { username }, { password }) => {
+    axios
+      .post('http://localhost:3000/api/admin/updatepassword', {
+        username,
+        password
+      })
+      .then(res => {
+        if (res.data.success == true) {
+          this.setState({
+            dataSource: this.state.dataSource.map(d =>
+              d.username === username ? { ...d, password } : d
+            )
+          })
+        }
+      })
   }
 
   handleCancel = () => {
@@ -85,13 +102,20 @@ export default class StudentTable extends React.Component {
   modal = () => {
     this.setState({ visible: true })
   }
-  componentDidMount () {
+  fetchStudents = m => {
     let { testID } = this.props
     axios.get('http://localhost:3000/api/admin/reports/' + testID).then(res => {
       if (res.data.success) {
-        this.setState({ dataSource: res.data.reports })
+        this.setState({
+          dataSource: res.data.reports,
+          confirmLoading: m ? false : this.state.confirmLoading,
+          visible: m ? false : this.state.visible
+        })
       }
     })
+  }
+  componentDidMount () {
+    this.fetchStudents()
   }
 
   render () {
@@ -124,7 +148,7 @@ export default class StudentTable extends React.Component {
           type='primary'
           style={{ marginBottom: 16 }}
         >
-          Add a student
+          Add students
         </Button>
         <Modal
           visible={this.state.visible}

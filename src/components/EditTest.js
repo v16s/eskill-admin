@@ -47,6 +47,21 @@ class EditTest extends Component {
           select:-internal-autofill-selected {
             box-shadow: inset 0 0 0px 9999px #00284f;
           }
+          .ant-list {
+            color: #fff;
+            &-bordered {
+              border-color: #1890ff;
+            }
+            &-bordered &-item {
+              border-color: #000d19;
+            }
+            &-item {
+              &:hover {
+                cursor: pointer;
+              }
+              background-color: #1890ff;
+            }
+          }
           .ant-modal {
             &-content {
               background-color: #000d19;
@@ -68,6 +83,11 @@ class EditTest extends Component {
             }
           }
           .ant-card {
+            .ant-btn.btn-assign {
+              background-color: #126bba;
+              border-color: #126bba;
+              color: #fff;
+            }
             .ant-modal {
               &-content {
                 background-color: #000d19;
@@ -188,7 +208,7 @@ class EditTest extends Component {
                   </div>
                 }
               >
-                <FacultyTable />
+                <FacultyTable testID={tid} />
               </Card>
             </Form.Item>
             <Form.Item>

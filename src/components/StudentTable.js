@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Table, Modal, InputNumber, Progress } from 'antd'
 import { EditableCell, EditableFormRow } from './Editable'
 import QuestionTable from './QuestionTable'
+import { reject } from 'lodash'
 import axios from 'axios'
 export default class StudentTable extends React.Component {
   columns
@@ -10,8 +11,7 @@ export default class StudentTable extends React.Component {
     this.columns = [
       {
         title: 'ID',
-        dataIndex: 'username',
-        editable: true
+        dataIndex: 'username'
       },
       {
         title: 'Password',
@@ -26,7 +26,11 @@ export default class StudentTable extends React.Component {
       },
       {
         title: ' ',
-        render: e => <Button type='danger'>Delete</Button>
+        render: row => (
+          <Button onClick={e => this.handleDelete(row)} type='danger'>
+            Delete
+          </Button>
+        )
       }
     ]
 
@@ -41,11 +45,36 @@ export default class StudentTable extends React.Component {
     }
   }
 
-  handleDelete = key => {}
+  handleDelete = ({ username }) => {
+    axios
+      .post('http://localhost:3000/api/admin/removestudent', {
+        username
+      })
+      .then(res => {
+        if (res.data.success == true) {
+          this.setState({
+            dataSource: reject(this.state.dataSource, { username })
+          })
+        }
+      })
+  }
 
   handleAdd = () => {}
 
-  handleSave = row => {}
+  handleSave = row => {
+    console.log(row)
+    // axios
+    //   .post('http://localhost:3000/api/admin/updatepassword', {
+    //     username
+    //   })
+    //   .then(res => {
+    //     if (res.data.success == true) {
+    //       this.setState({
+    //         dataSource: reject(this.state.dataSource, { username })
+    //       })
+    //     }
+    //   })
+  }
 
   handleCancel = () => {
     this.setState({ visible: false })

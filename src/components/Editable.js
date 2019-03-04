@@ -31,7 +31,7 @@ class EditableCell extends React.Component {
         return
       }
       this.toggleEdit()
-      handleSave({ name: record.name, newName: values.name })
+      handleSave({ name: record.name, newName: values.name }, record, values)
     })
   }
 

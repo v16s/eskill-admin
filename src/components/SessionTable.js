@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input, Button, Table, Popconfirm, Modal } from 'antd'
 import axios from 'axios'
-import { EditableCell, EditableFormRow } from './editable'
+import { EditableCell, EditableFormRow } from './Editable'
 
 export default class CourseTable extends React.Component {
   cols

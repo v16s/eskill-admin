@@ -54,6 +54,7 @@ export default class FacultyList extends React.Component {
             confirmLoading={this.props.confirmLoading}
             onCancel={this.props.handleCancel}
             closable={false}
+            footer={null}
           >
             <List
               size={'large'}

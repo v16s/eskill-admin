@@ -52,6 +52,9 @@ class EditTest extends Component {
             &-bordered {
               border-color: #1890ff;
             }
+            &-bordered &-item {
+              border-color: #000d19;
+            }
             &-item {
               &:hover {
                 cursor: pointer;

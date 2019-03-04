@@ -63,6 +63,17 @@ export default class StudentTable extends React.Component {
 
   handleSave = row => {
     console.log(row)
+    // axios
+    //   .post('http://localhost:3000/api/admin/updatepassword', {
+    //     username
+    //   })
+    //   .then(res => {
+    //     if (res.data.success == true) {
+    //       this.setState({
+    //         dataSource: reject(this.state.dataSource, { username })
+    //       })
+    //     }
+    //   })
   }
 
   handleCancel = () => {

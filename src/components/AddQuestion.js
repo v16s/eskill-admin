@@ -54,7 +54,7 @@ class AddQuestion extends Component {
     } = this.state
 
     axios
-      .post('http://localhost:3000/api/global/ash', {
+      .post('http://localhost:3000/api/coordinator/addquestion', {
         branch,
         course,  
         title ,

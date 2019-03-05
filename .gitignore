@@ -1,3 +1,7 @@
 node_modules
 dist/
 .cache
+yarn.lock
+package-lock.json
+yarn-error.log
+npm-error.log

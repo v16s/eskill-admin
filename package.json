@@ -46,6 +46,6 @@
     "build": "parcel build ./src/index.html --public-url /",
     "test": "nodemon -w main.js -x electron .",
     "server": "node server",
-    "client": "parcel ./src/index.html --public-url / --no-cache"
+    "client": "parcel ./src/index.html --public-url / --no-cache --port 2000"
   }
 }

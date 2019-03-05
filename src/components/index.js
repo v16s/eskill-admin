@@ -11,6 +11,7 @@ import StudentTable from './StudentTable'
 import FacultyTable from './FacultyTable'
 import Header from './Header'
 import LoadScreen from './LoadScreen'
+import AddQuestion from './AddQuestion'
 export {
   history,
   Login,
@@ -24,5 +25,6 @@ export {
   AddCourse,
   Header,
   LoadScreen,
-  FacultyTable
+  FacultyTable,
+  AddQuestion
 }

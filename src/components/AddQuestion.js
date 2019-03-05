@@ -1,25 +1,22 @@
-import React from 'react'
+import React, { Component } from 'react'
 import axios from 'axios'
-import { Form, Input, Button, Select } from 'antd'
-import { history } from 'components'
-const Option = Select.Option
+import { Form, Input, Icon, Select, Button, Upload, InputNumber } from 'antd'
+const { Option } = Select
+const InputGroup = Input.Group
 
-class CreateTest extends React.Component {
+class AddQuestion extends Component {
   constructor () {
     super()
     this.state = {
       branch: '',
-      course: '',
-      questions: '',
-      time: '',
-      number: '',
-      testID: '',
-      dataSource: []
+      dataSource: [],
+      course: ''
     }
   }
   componentDidMount () {
     const dataSource = this.state
     axios.get('http://localhost:3000/api/global/branches').then(res => {
+      console.log(res.data)
       this.setState({ dataSource: res.data.branches })
     })
   }
@@ -34,41 +31,42 @@ class CreateTest extends React.Component {
     state[e.target.name] = e.target.value
     this.setState(state)
   }
+
+  normFile = e => {
+    console.log('Upload event:', e)
+    if (Array.isArray(e)) {
+      return e
+    }
+    return e && e.fileList
+  }
   onSubmit = e => {
     e.preventDefault()
 
-    const { branch, course, questions, time, testID, number } = this.state
+    const {
+      // fields
+    } = this.state
 
     axios
-      .post('http://localhost:3000/api/admin/createTest', {
-        branch,
-        course,
-        questions,
-        time,
-        testID,
-        number
-      })
+      .post('http://localhost:3000', {})
       .then(result => {
-        if (result.data.success) {
-          history.push('/')
-        }
+        this.props.history.push('/')
       })
       .catch(err => {
         console.log(err)
       })
   }
+
   render () {
-    const {
-      branch,
-      course,
-      questions,
-      time,
-      testID,
-      number,
-      dataSource
-    } = this.state
+    const { branch } = this.state
     return (
-      <div>
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'left',
+          minHeight: '100vh'
+        }}
+      >
         <style jsx global>{`
           .custom-form .ant-input-affix-wrapper .ant-input-prefix,
           .ant-input-affix-wrapper .ant-input-suffix {
@@ -105,16 +103,6 @@ class CreateTest extends React.Component {
           onSubmit={this.onSubmit}
           className='custom-form'
         >
-          <Form.Item label='Unique Test ID'>
-            <Input
-              size='large'
-              name='testID'
-              onChange={this.onChange}
-              value={testID}
-              type='String'
-              placeholder='Test ID'
-            />
-          </Form.Item>
           <Form.Item label='Branch'>
             <Select
               defaultValue={'Choose Branch...'}
@@ -149,45 +137,31 @@ class CreateTest extends React.Component {
               })}
             </Select>
           </Form.Item>
-          <Form.Item label='Questions'>
-            <Input
-              size='large'
-              name='questions'
-              onChange={this.onChange}
-              value={questions}
-              type='number'
-              placeholder='No of questions'
-            />
+          <Form.Item label='Title'>
+            <Input size='large' display='flex' placeholder='Title' />
           </Form.Item>
-          <Form.Item label='Test Time'>
-            <Input
-              size='large'
-              name='time'
-              onChange={this.onChange}
-              value={time}
-              type='number'
-              placeholder='Total Time'
-            />
+          <Form.Item label='Description'>
+            <Input size='large' display='flex' placeholder='Description' />
           </Form.Item>
-          <Form.Item label='Total Students'>
-            <Input
-              size='large'
-              name='number'
-              onChange={this.onChange}
-              value={number}
-              type='number'
-              placeholder='Number of Students'
-            />
+          <Form.Item label='Upload'>
+            <Upload name='logo' action='/upload.do' listType='picture'>
+              <Button>
+                <Icon type='upload' /> Click to upload
+              </Button>
+            </Upload>
           </Form.Item>
-          <Form.Item>
+          <Form.Item style={{ color: '#fff', marginBottom: 0 }}>
             <Button
               type='primary'
-              size='large'
-              className='Submit-button'
+              className='login-form-button'
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                position: 'center'
+              }}
               onClick={this.onSubmit}
-              style={{ width: '100%' }}
             >
-              Create
+              Submit
             </Button>
           </Form.Item>
         </Form>
@@ -196,4 +170,4 @@ class CreateTest extends React.Component {
   }
 }
 
-export default CreateTest
+export default AddQuestion

@@ -1,13 +1,15 @@
 import React from 'react'
-import { Admin, LoggedInWrapper, Student } from './views'
+import { Admin, LoggedInWrapper, Coordinator } from './views'
 import { Router, Route, Switch } from 'react-router-dom'
 import { history, Login, Register } from './components'
 const AuthRoutes = props => {
   switch (props.level) {
     case 0:
-     { return <Admin {...props} />}
-    //case 1:
-    //{ return <Coordinator {...props}>}
+      return <Admin {...props} />
+      break
+    case 1:
+      return <Coordinator {...props} />
+      break
   }
 }
 export default ({ loggedIn, login, details, redirect }) => (

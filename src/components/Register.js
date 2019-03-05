@@ -24,13 +24,16 @@ class Create extends Component {
   componentDidMount () {
     const { campus, departments } = this.state
     axios
-      .get('http://localhost:3000/api/global/global', {
+      .get('http://localhost:3000/api/global/', {
         campus,
         departments
       })
       .then(result => {
         console.log(result)
-        this.setState({ campus:result.data.campus,departments:result.data.departments })
+        this.setState({
+          campus: result.data.campus,
+          departments: result.data.departments
+        })
         console.log(departments)
       })
       .catch(err => {
@@ -167,11 +170,12 @@ class Create extends Component {
               onChange={this.onSelectChange}
               style={{ width: '100%' }}
               size='large'
-            >{this.state.campus.map((b) => (
-              <Option key={b} value={b}>
-                {b}
-              </Option>
-            ))}
+            >
+              {this.state.campus.map(b => (
+                <Option key={b} value={b}>
+                  {b}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item>
@@ -182,7 +186,7 @@ class Create extends Component {
               style={{ width: '100%' }}
               size='large'
             >
-              {this.state.departments.map((b) => (
+              {this.state.departments.map(b => (
                 <Option key={b} value={b}>
                   {b}
                 </Option>

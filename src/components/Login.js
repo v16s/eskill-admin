@@ -44,6 +44,9 @@ class Login extends Component {
         console.log(result)
         localStorage.setItem('jwtToken', result.data.token)
         this.setState({ message: '' })
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem(
+          'jwtToken'
+        )
         this.props.login(result.data.user)
       })
       .catch(error => {

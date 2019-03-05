@@ -33,7 +33,7 @@ class Board extends React.Component {
   render () {
     const { collapsed } = this.state
     let { width } = this.state
-    return (
+    if(this.props.lvl==0){return (
       <Sider
         collapsible
         collapsed={collapsed}
@@ -107,7 +107,75 @@ class Board extends React.Component {
           </Menu.Item>
         </Menu>
       </Sider>
-    )
+    )}
+    else if(this.props.lvl==1){
+      return(
+        <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={this.onCollapse}
+        collapsedWidth={width < 768 ? 0 : undefined}
+        width={200}
+        style={{ paddingTop: '20px' }}
+      >
+        {width > 768 && (
+          <div
+            style={{
+              color: '#fff',
+              width: '100%',
+              paddingLeft: !collapsed && '24px',
+              textAlign: collapsed && 'center',
+              paddingBottom: '44px'
+            }}
+          >
+            <Icon
+              style={{ marginRight: !collapsed && '10px' }}
+              type='file-text'
+              theme='filled'
+            />
+            {!collapsed && <span>eSkill Test</span>}
+          </div>
+        )}
+        <Menu
+          mode='inline'
+          theme='dark'
+          defaultOpenKeys={['sub1', 'sub2', 'sub3']}
+          style={{ height: '100%', borderRight: 0, paddingBottom: '100px' }}
+        >
+
+          <Menu.Item
+            key='home'
+            onClick={() => {
+              history.push('/')
+            }}
+          >
+            <Icon type='home' />
+            <span>Home</span>
+          </Menu.Item>
+          <Menu.Item
+            key='5'
+            key=''
+            onClick={() => {
+              history.push('/addquestion')
+            }}
+          >
+            {' '}
+            <Icon type='folder-add' />
+            <span>Add Question</span>
+          </Menu.Item>
+            <Menu.Item
+            key='logout'
+            onClick={e => {
+              this.logout()
+            }}
+          >
+            <Icon type='logout' />
+            <span>Logout</span>
+          </Menu.Item>
+        </Menu>
+      </Sider>
+      )
+    }
   }
 }
 

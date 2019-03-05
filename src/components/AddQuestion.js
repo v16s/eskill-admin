@@ -3,14 +3,19 @@ import axios from 'axios'
 import { Form, Input, Icon, Select, Button, Upload, InputNumber } from 'antd'
 const { Option } = Select
 const InputGroup = Input.Group
+const {TextArea}= Input
 
 class AddQuestion extends Component {
   constructor () {
     super()
     this.state = {
       branch: '',
+      course: '',  
+      Qnumber: '',
+      title: '',
+      definition: '',
       dataSource: [],
-      course: ''
+
     }
   }
   componentDidMount () {
@@ -20,18 +25,17 @@ class AddQuestion extends Component {
       this.setState({ dataSource: res.data.branches })
     })
   }
+  onChange = e => {
+    const state = this.state
+    state[e.target.name] = e.target.value
+    this.setState(state)
+  }
   onBranchChange = e => {
     this.setState({ branch: e })
   }
   onSelectChange = e => {
     this.setState({ course: e })
   }
-  onChange = e => {
-    const state = this.state
-    state[e.target.name] = e.target.value
-    this.setState(state)
-  }
-
   normFile = e => {
     console.log('Upload event:', e)
     if (Array.isArray(e)) {
@@ -43,11 +47,19 @@ class AddQuestion extends Component {
     e.preventDefault()
 
     const {
-      // fields
+      branch,
+      course, 
+      title ,
+      definition 
     } = this.state
 
     axios
-      .post('http://localhost:3000', {})
+      .post('http://localhost:3000/api/global/ash', {
+        branch,
+        course,  
+        title ,
+        definition 
+      })
       .then(result => {
         this.props.history.push('/')
       })
@@ -57,16 +69,14 @@ class AddQuestion extends Component {
   }
 
   render () {
-    const { branch } = this.state
+    const {
+      branch,
+      course,
+      title ,
+      definition 
+    } = this.state
     return (
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'left',
-          minHeight: '100vh'
-        }}
-      >
+      <div>
         <style jsx global>{`
           .custom-form .ant-input-affix-wrapper .ant-input-prefix,
           .ant-input-affix-wrapper .ant-input-suffix {
@@ -105,9 +115,11 @@ class AddQuestion extends Component {
         >
           <Form.Item label='Branch'>
             <Select
+              style={{ width: 400 }}
               defaultValue={'Choose Branch...'}
               name='branch'
               onChange={this.onBranchChange}
+              value={branch}
               size='large'
               style={{ width: '100%' }}
             >
@@ -120,6 +132,7 @@ class AddQuestion extends Component {
           </Form.Item>
           <Form.Item label='Course'>
             <Select
+              compact style={{ width: 400 }}
               defaultValue={'Choose Course...'}
               name='course'
               onChange={this.onSelectChange}
@@ -138,17 +151,32 @@ class AddQuestion extends Component {
             </Select>
           </Form.Item>
           <Form.Item label='Title'>
-            <Input size='large' display='flex' placeholder='Title' />
+            <Input 
+            style={{ width: 400 }} 
+            size='large' 
+            display='flex' 
+            name='title'
+            onChange={this.onChange}
+            value={title}
+            placeholder='Title' />
           </Form.Item>
           <Form.Item label='Description'>
-            <Input size='large' display='flex' placeholder='Description' />
+            <Input.TextArea 
+            id='definiton'
+            style={{ width: 400 }} 
+            rows={4}
+            name='definition'
+            value={definition}
+            onChange={this.onChange}
+             />
           </Form.Item>
           <Form.Item label='Upload'>
-            <Upload name='logo' action='/upload.do' listType='picture'>
-              <Button>
-                <Icon type='upload' /> Click to upload
-              </Button>
-            </Upload>
+             <Upload.Dragger name="files" action="/upload.do">
+                <p className="ant-upload-drag-icon">
+                  <Icon type="inbox" />
+                </p>
+                <p className="ant-upload-text">Click or drag file to this area to upload the image</p>
+              </Upload.Dragger>
           </Form.Item>
           <Form.Item style={{ color: '#fff', marginBottom: 0 }}>
             <Button

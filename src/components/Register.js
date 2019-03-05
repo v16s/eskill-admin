@@ -59,8 +59,6 @@ class Create extends Component {
       regNumber,
       password,
       fullName,
-      campus,
-      departments,
       email,
       dob
     } = this.state
@@ -88,10 +86,7 @@ class Create extends Component {
       regNumber,
       password,
       fullName,
-      campus,
-      departments,
       email,
-      dob
     } = this.state
     return (
       <div

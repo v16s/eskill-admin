@@ -1,8 +1,10 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { AddQuestion } from 'components'
+import { AddQuestion, ShowQuestions } from 'components'
+
 export default ({ login, redirect }) => (
   <Switch>
-    <Route path='/' component={() => <AddQuestion/>} />
+    <Route exact path='/' component={() => <AddQuestion />} />
+    <Route path='/showquestions' component={() => <ShowQuestions />} />
   </Switch>
 )

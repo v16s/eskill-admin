@@ -3,19 +3,18 @@ import axios from 'axios'
 import { Form, Input, Icon, Select, Button, Upload, InputNumber } from 'antd'
 const { Option } = Select
 const InputGroup = Input.Group
-const {TextArea}= Input
+const { TextArea } = Input
 
 class AddQuestion extends Component {
   constructor () {
     super()
     this.state = {
       branch: '',
-      course: '',  
+      course: '',
       Qnumber: '',
       title: '',
       definition: '',
-      dataSource: [],
-
+      dataSource: []
     }
   }
   componentDidMount () {
@@ -46,19 +45,14 @@ class AddQuestion extends Component {
   onSubmit = e => {
     e.preventDefault()
 
-    const {
-      branch,
-      course, 
-      title ,
-      definition 
-    } = this.state
+    const { branch, course, title, definition } = this.state
 
     axios
       .post('http://localhost:3000/api/coordinator/addquestion', {
         branch,
-        course,  
-        title ,
-        definition 
+        course,
+        title,
+        definition
       })
       .then(result => {
         this.props.history.push('/')
@@ -69,12 +63,7 @@ class AddQuestion extends Component {
   }
 
   render () {
-    const {
-      branch,
-      course,
-      title ,
-      definition 
-    } = this.state
+    const { branch, course, dataSource, title, definition } = this.state
     return (
       <div>
         <style jsx global>{`
@@ -132,7 +121,8 @@ class AddQuestion extends Component {
           </Form.Item>
           <Form.Item label='Course'>
             <Select
-              compact style={{ width: 400 }}
+              compact
+              style={{ width: 400 }}
               defaultValue={'Choose Course...'}
               name='course'
               onChange={this.onSelectChange}
@@ -151,32 +141,35 @@ class AddQuestion extends Component {
             </Select>
           </Form.Item>
           <Form.Item label='Title'>
-            <Input 
-            style={{ width: 400 }} 
-            size='large' 
-            display='flex' 
-            name='title'
-            onChange={this.onChange}
-            value={title}
-            placeholder='Title' />
+            <Input
+              style={{ width: 400 }}
+              size='large'
+              display='flex'
+              name='title'
+              onChange={this.onChange}
+              value={title}
+              placeholder='Title'
+            />
           </Form.Item>
           <Form.Item label='Description'>
-            <Input.TextArea 
-            id='definiton'
-            style={{ width: 400 }} 
-            rows={4}
-            name='definition'
-            value={definition}
-            onChange={this.onChange}
-             />
+            <Input.TextArea
+              id='definiton'
+              style={{ width: 400 }}
+              rows={4}
+              name='definition'
+              value={definition}
+              onChange={this.onChange}
+            />
           </Form.Item>
           <Form.Item label='Upload'>
-             <Upload.Dragger name="files" action="/upload.do">
-                <p className="ant-upload-drag-icon">
-                  <Icon type="inbox" />
-                </p>
-                <p className="ant-upload-text">Click or drag file to this area to upload the image</p>
-              </Upload.Dragger>
+            <Upload.Dragger name='files' action='/upload.do'>
+              <p className='ant-upload-drag-icon'>
+                <Icon type='inbox' />
+              </p>
+              <p className='ant-upload-text'>
+                Click or drag file to this area to upload the image
+              </p>
+            </Upload.Dragger>
           </Form.Item>
           <Form.Item style={{ color: '#fff', marginBottom: 0 }}>
             <Button

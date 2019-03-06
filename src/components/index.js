@@ -11,6 +11,7 @@ import StudentTable from './StudentTable'
 import FacultyTable from './FacultyTable'
 import Header from './Header'
 import LoadScreen from './LoadScreen'
+import ShowQuestions from './ShowQuestions'
 import AddQuestion from './AddQuestion'
 export {
   history,
@@ -20,6 +21,7 @@ export {
   CreateTest,
   Navbar,
   FCRegister,
+  ShowQuestions,
   EditTest,
   StudentTable,
   AddCourse,

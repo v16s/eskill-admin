@@ -66,7 +66,7 @@ class AddQuestion extends Component {
     const { branch, course, dataSource, title, definition } = this.state
     return (
       <div>
-        <style jsx global>{`
+        <style jsx global>{/* CSS */ `
           .custom-form .ant-input-affix-wrapper .ant-input-prefix,
           .ant-input-affix-wrapper .ant-input-suffix {
             color: #1890ff !important;
@@ -95,6 +95,14 @@ class AddQuestion extends Component {
           }
           .custom-form .ant-form-item-label label {
             color: #ddd !important;
+          }
+          .ant-upload.ant-upload-drag {
+            background: #001f3d;
+            border-color: #001f3d;
+            color: #fff;
+            p.ant-upload-text {
+              color: #fff;
+            }
           }
         `}</style>
         <Form

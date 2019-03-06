@@ -47,7 +47,7 @@ export default class StudentTable extends React.Component {
 
   handleDelete = ({ username }) => {
     axios
-      .post('http://localhost:3000/api/admin/removestudent', {
+      .post('http://localhost:3000/api/faculty/removestudent', {
         username
       })
       .then(res => {
@@ -64,7 +64,7 @@ export default class StudentTable extends React.Component {
     let { testID } = this.props
     this.setState({ confirmLoading: true }, () => {
       axios
-        .post('http://localhost:3000/api/admin/addstudent', {
+        .post('http://localhost:3000/api/faculty/addstudent', {
           testID,
           number
         })
@@ -78,7 +78,7 @@ export default class StudentTable extends React.Component {
 
   handleSave = (_val, { username }, { password }) => {
     axios
-      .post('http://localhost:3000/api/admin/updatepassword', {
+      .post('http://localhost:3000/api/faculty/updatepassword', {
         username,
         password
       })
@@ -104,15 +104,17 @@ export default class StudentTable extends React.Component {
   }
   fetchStudents = m => {
     let { testID } = this.props
-    axios.get('http://localhost:3000/api/admin/reports/' + testID).then(res => {
-      if (res.data.success) {
-        this.setState({
-          dataSource: res.data.reports,
-          confirmLoading: m ? false : this.state.confirmLoading,
-          visible: m ? false : this.state.visible
-        })
-      }
-    })
+    axios
+      .get('http://localhost:3000/api/faculty/reports/' + testID)
+      .then(res => {
+        if (res.data.success) {
+          this.setState({
+            dataSource: res.data.reports,
+            confirmLoading: m ? false : this.state.confirmLoading,
+            visible: m ? false : this.state.visible
+          })
+        }
+      })
   }
   componentDidMount () {
     this.fetchStudents()

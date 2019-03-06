@@ -1,5 +1,5 @@
 import React from 'react'
-import { Admin, LoggedInWrapper, Coordinator } from './views'
+import { Admin, Faculty, LoggedInWrapper, Coordinator } from './views'
 import { Router, Route, Switch } from 'react-router-dom'
 import { history, Login, Register } from './components'
 const AuthRoutes = props => {
@@ -9,6 +9,9 @@ const AuthRoutes = props => {
       break
     case 1:
       return <Coordinator {...props} />
+      break
+    case 2:
+      return <Faculty {...props} />
       break
   }
 }

@@ -12,6 +12,7 @@ import FacultyTable from './FacultyTable'
 import Header from './Header'
 import LoadScreen from './LoadScreen'
 import AddQuestion from './AddQuestion'
+import EditTestFaculty from './EditTestFaculty'
 export {
   history,
   Login,
@@ -26,5 +27,6 @@ export {
   Header,
   LoadScreen,
   FacultyTable,
-  AddQuestion
+  AddQuestion,
+  EditTestFaculty
 }

@@ -155,7 +155,7 @@ export default class ShowQuestions extends React.Component {
           onSubmit={this.onSubmit}
           className='custom-form'
         >
-          <Form.Item label='Branch'>
+         <Form.Item label='Branch'>
             <Select
               style={{ width: 400 }}
               defaultValue={'Choose Branch...'}
@@ -163,15 +163,15 @@ export default class ShowQuestions extends React.Component {
               onChange={this.onBranchChange}
               value={branch}
               size='large'
-            />
+              style={{ width: '100%' }}
+            >
+              {this.state.dataSource.map(b => (
+                <Option key={b.name} value={b.name}>
+                  {b.name}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
-
-          {/* {this.state.dataSource.map(b => (
-          <Option key={b.name} value={b.name}>
-            {b.name}
-          </Option>
-        ))} */}
-
           <Form.Item label='Course'>
             <Select
               compact
@@ -180,16 +180,17 @@ export default class ShowQuestions extends React.Component {
               name='course'
               onChange={this.onSelectChange}
               size='large'
+              style={{ width: '100%' }}
             >
-              {/* {this.state.dataSource.map(function (b) {
-              if (b.name == branch) {
-                return b.courses.map(c => (
-                  <Option key={c.name} value={c.name}>
-                    {c.name}
-                  </Option>
-                ))
-              }
-            })} */}
+              {this.state.dataSource.map(function (b) {
+                if (b.name == branch) {
+                  return b.courses.map(c => (
+                    <Option key={c.name} value={c.name}>
+                      {c.name}
+                    </Option>
+                  ))
+                }
+              })}
             </Select>
           </Form.Item>
           <Form.Item label='Session Table' width='100%'>

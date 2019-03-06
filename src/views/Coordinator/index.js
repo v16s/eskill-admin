@@ -4,7 +4,7 @@ import { AddQuestion, ShowQuestions } from 'components'
 
 export default ({ login, redirect }) => (
   <Switch>
-    <Route exact path='/' component={() => <AddQuestion />} />
-    <Route path='/showquestions' component={() => <ShowQuestions />} />
+    <Route exact path='/addquestion' component={() => <AddQuestion />} />
+    <Route path='/' component={() => <ShowQuestions />} />
   </Switch>
 )

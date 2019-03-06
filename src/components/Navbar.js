@@ -66,7 +66,7 @@ class Navbar extends React.Component {
           defaultOpenKeys={['sub1', 'sub2', 'sub3']}
           style={{ height: '100%', borderRight: 0, paddingBottom: '100px' }}
         >
-          <Menu.Item
+            <Menu.Item
             key='home'
             onClick={() => {
               history.push('/')
@@ -75,6 +75,7 @@ class Navbar extends React.Component {
             <Icon type='home' />
             <span>Home</span>
           </Menu.Item>
+  
           {this.props.lvl == 0 && (
             <Menu.Item
               key='5'
@@ -100,7 +101,7 @@ class Navbar extends React.Component {
           )}
           {this.props.lvl == 1 && (
             <Menu.Item
-              key='5'
+              key='1'
               key=''
               onClick={() => {
                 history.push('/addquestion')

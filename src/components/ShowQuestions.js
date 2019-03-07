@@ -1,6 +1,19 @@
 import React from 'react'
 import axios from 'axios'
-import { Form, Input, Icon, Select, Upload, InputNumber, Table } from 'antd'
+import { AddQuestion } from './AddQuestion'
+import {
+  Form,
+  Input,
+  Icon,
+  Select,
+  Upload,
+  InputNumber,
+  Table,
+  Modal,
+  Button,
+  List,
+  Card
+} from 'antd'
 import { EditableCell, EditableFormRow } from './Editable'
 import QuestionTable from './QuestionTable'
 const { Option } = Select
@@ -86,14 +99,71 @@ export default class ShowQuestions extends React.Component {
     this.setState({ course: e })
   }
 
+  showModal = () => {
+    this.setState({
+      visible: true
+    })
+  }
+
+  handleCancel = e => {
+    console.log(e)
+    this.setState({
+      visible: false
+    })
+  }
+
+  onEdit = () => {}
+
   render () {
     const { course, branch, session, questions } = this.state
 
+    const dataset = ['Question 1', 'Question 2', 'Question 3', 'Question 4']
+
     const columns = [
+      {
+        title: '',
+        dataIndex: 'questions',
+        width: '10%',
+        render: (text, record) => (
+          <div>
+            <Button size='small' type='primary' onClick={this.showModal}>
+              View Questions
+            </Button>
+            <Modal
+              title='Questions'
+              visible={this.state.visible}
+              onCancel={this.handleCancel}
+            >
+              <List
+                bordered
+                itemLayout='horizontal'
+                dataSource={dataset}
+                renderItem={item => (
+                  <List.Item
+                    actions={[
+                      <div>
+                        <Button
+                          onClick={this.showModal1}
+                          size='small'
+                          type='primary'
+                        >
+                          Edit
+                        </Button>
+                      </div>
+                    ]}
+                  >
+                    {item}
+                  </List.Item>
+                )}
+              />
+            </Modal>
+          </div>
+        )
+      },
       {
         title: 'Session',
         dataIndex: 'session',
-        width: '80%',
+        width: '70%',
         key: 'session',
         render: text => <a href='javascript:;'>{text}</a>
       },
@@ -254,7 +324,6 @@ export default class ShowQuestions extends React.Component {
               className='student-table'
               columns={columns}
               dataSource={data}
-              expandedRowRender={record => <Qtable dataSource='' label='' />}
             />
           </Form.Item>
         </Form>

@@ -119,7 +119,7 @@ export default class ShowQuestions extends React.Component {
     ]
     return (
       <div>
-        <style jsx global>{`
+        <style jsx global>{/* CSS */ `
           .custom-form .ant-input-affix-wrapper .ant-input-prefix,
           .ant-input-affix-wrapper .ant-input-suffix {
             color: #1890ff !important;
@@ -149,13 +149,69 @@ export default class ShowQuestions extends React.Component {
           .custom-form .ant-form-item-label label {
             color: #ddd !important;
           }
+          .ant-pagination-item-link,
+          .ant-pagination-item,
+          .ant-pagination-prev,
+          .ant-pagination-next,
+          .ant-pagination-jump-prev,
+          .ant-pagination-jump-next {
+            background-color: transparent;
+            a {
+              color: #fff;
+            }
+          }
+          .ant-pagination-jump-prev
+            .ant-pagination-item-container
+            .ant-pagination-item-ellipsis,
+          .ant-pagination-jump-next
+            .ant-pagination-item-container
+            .ant-pagination-item-ellipsis {
+            color: #fff;
+          }
+          .ant-pagination-disabled a,
+          .ant-pagination-disabled:hover a,
+          .ant-pagination-disabled:focus a,
+          .ant-pagination-disabled .ant-pagination-item-link,
+          .ant-pagination-disabled:hover .ant-pagination-item-link,
+          .ant-pagination-disabled:focus .ant-pagination-item-link {
+            background-color: transparent;
+
+            color: #aaa;
+            border-color: #aaa;
+          }
+          .student-table table {
+            border-color: transparent;
+            td,
+            tr > td {
+              border-color: transparent;
+              background-color: rgb(0, 13, 25);
+              color: #fff;
+            }
+            .ant-table-row-expand-icon {
+              background: transparent;
+            }
+            th {
+              background-color: #001529;
+              border-color: transparent;
+              color: #fff;
+            }
+            .question-table table {
+              td,
+              tr > td {
+                background-color: #001529;
+              }
+              th {
+                background-color: #001f3d;
+              }
+            }
+          }
         `}</style>
         <Form
           style={{ padding: 0 }}
           onSubmit={this.onSubmit}
           className='custom-form'
         >
-         <Form.Item label='Branch'>
+          <Form.Item label='Branch'>
             <Select
               style={{ width: 400 }}
               defaultValue={'Choose Branch...'}
@@ -195,7 +251,7 @@ export default class ShowQuestions extends React.Component {
           </Form.Item>
           <Form.Item label='Session Table' width='100%'>
             <Table
-              className='custom-table'
+              className='student-table'
               columns={columns}
               dataSource={data}
               expandedRowRender={record => <Qtable dataSource='' label='' />}

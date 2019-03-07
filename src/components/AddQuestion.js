@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Form, Input, Icon, Select, Button, Upload, InputNumber } from 'antd'
+import {
+  Form,
+  Input,
+  Icon,
+  Select,
+  Button,
+  Upload,
+  Radio,
+  Row,
+  Col
+} from 'antd'
 const { Option } = Select
-const InputGroup = Input.Group
-const { TextArea } = Input
-
+const { Group: RadioGroup, Button: RadioButton } = Radio
 class AddQuestion extends Component {
   constructor () {
     super()
@@ -14,7 +22,8 @@ class AddQuestion extends Component {
       Qnumber: '',
       title: '',
       definition: '',
-      dataSource: []
+      dataSource: [],
+      fileList: []
     }
   }
   componentDidMount () {
@@ -42,6 +51,25 @@ class AddQuestion extends Component {
     }
     return e && e.fileList
   }
+  handlePreview = file => {
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true
+    })
+  }
+  beforeUpload = e => {
+    this.setState({ img: e.file })
+    return false
+  }
+  handleChange = ({ fileList }) => {
+    this.setState({ fileList })
+  }
+  onChange = e => {
+    const state = this.state
+    state[e.target.name] = e.target.value
+    this.setState(state)
+  }
+
   onSubmit = e => {
     e.preventDefault()
 
@@ -61,9 +89,25 @@ class AddQuestion extends Component {
         console.log(err)
       })
   }
-
+  beforeUpload = file => {
+    this.setState({ file })
+    return false
+  }
+  uploadButton = (
+    <div>
+      <Icon type='plus' />
+      <div className='ant-upload-text'>Upload</div>
+    </div>
+  )
   render () {
-    const { branch, course, dataSource, title, definition } = this.state
+    const {
+      branch,
+      course,
+      dataSource,
+      title,
+      definition,
+      fileList
+    } = this.state
     return (
       <div>
         <style jsx global>{/* CSS */ `
@@ -93,6 +137,11 @@ class AddQuestion extends Component {
             box-shadow: inset 0 0 0px 9999px #00284f;
             border-color: transparent !important;
           }
+          .ant-radio-button-wrapper {
+            background-color: #00417f;
+            border-color: #00417f;
+            color: #fff;
+          }
           .custom-form .ant-form-item-label label {
             color: #ddd !important;
           }
@@ -104,6 +153,24 @@ class AddQuestion extends Component {
               color: #fff;
             }
           }
+          .ant-radio-group-solid
+            .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),
+          .ant-radio-group-solid
+            .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+            background-color: #00db95;
+            border-color: #00db95;
+            .ant-input,
+            .ant-input:focus,
+            .ant-input:hover,
+            .ant-select-arrow {
+              background-color: #002d19 !important;
+              border-color: transparent !important;
+              color: #fff !important;
+            }
+          }
+          .ant-radio-button-wrapper:first-child {
+            border-left-color: transparent;
+          }
         `}</style>
         <Form
           style={{ padding: 0, maxWidth: 500 }}
@@ -112,11 +179,10 @@ class AddQuestion extends Component {
         >
           <Form.Item label='Branch'>
             <Select
-              style={{ width: 400 }}
+              style={{ width: '100%' }}
               defaultValue={'Choose Branch...'}
               name='branch'
               onChange={this.onBranchChange}
-              value={branch}
               size='large'
               style={{ width: '100%' }}
             >
@@ -150,7 +216,7 @@ class AddQuestion extends Component {
           </Form.Item>
           <Form.Item label='Title'>
             <Input
-              style={{ width: 400 }}
+              style={{ width: '100%' }}
               size='large'
               display='flex'
               name='title'
@@ -162,22 +228,99 @@ class AddQuestion extends Component {
           <Form.Item label='Description'>
             <Input.TextArea
               id='definiton'
-              style={{ width: 400 }}
+              style={{ width: '100%' }}
               rows={4}
               name='definition'
               value={definition}
               onChange={this.onChange}
             />
           </Form.Item>
+          <Form.Item label='Answer'>
+            <RadioGroup
+              buttonStyle='solid'
+              onChange={this.onChange}
+              name='radiogroup'
+              style={{
+                width: '100%'
+              }}
+            >
+              <Row gutter={16}>
+                <Col md={12}>
+                  <RadioButton
+                    value={1}
+                    style={{ width: '100%', height: 'auto' }}
+                  >
+                    <Input
+                      name='opt1'
+                      size='large'
+                      value={this.state.opt1}
+                      onChange={this.onChange}
+                      placeholder='Option 1'
+                      style={{ margin: '2px 0' }}
+                    />
+                  </RadioButton>
+                </Col>
+                <Col md={12}>
+                  <RadioButton
+                    value={2}
+                    style={{ width: '100%', height: 'auto' }}
+                  >
+                    <Input
+                      name='opt2'
+                      size='large'
+                      value={this.state.opt2}
+                      onChange={this.onChange}
+                      placeholder='Option 2'
+                      style={{ margin: '2px 0' }}
+                    />
+                  </RadioButton>
+                </Col>
+              </Row>
+
+              <Row gutter={16} style={{ marginTop: '15px' }}>
+                <Col md={12}>
+                  <RadioButton
+                    value={3}
+                    style={{ width: '100%', height: 'auto' }}
+                  >
+                    <Input
+                      name='opt3'
+                      size='large'
+                      value={this.state.opt3}
+                      onChange={this.onChange}
+                      placeholder='Option 3'
+                      style={{ margin: '2px 0' }}
+                    />
+                  </RadioButton>
+                </Col>
+                <Col md={12}>
+                  <RadioButton
+                    value={4}
+                    style={{ width: '100%', height: 'auto' }}
+                  >
+                    <Input
+                      name='opt4'
+                      size='large'
+                      value={this.state.opt4}
+                      onChange={this.onChange}
+                      placeholder='Option 4'
+                      style={{ margin: '2px 0' }}
+                    />
+                  </RadioButton>
+                </Col>
+              </Row>
+            </RadioGroup>
+          </Form.Item>
           <Form.Item label='Upload'>
-            <Upload.Dragger name='files' action='/upload.do'>
-              <p className='ant-upload-drag-icon'>
-                <Icon type='inbox' />
-              </p>
-              <p className='ant-upload-text'>
-                Click or drag file to this area to upload the image
-              </p>
-            </Upload.Dragger>
+            <Upload
+              listType='picture-card'
+              fileList={fileList}
+              onPreview={this.handlePreview}
+              onChange={this.handleChange}
+              beforeUpload={this.beforeUpload}
+            >
+              {fileList.length < 1 && this.uploadButton}
+            </Upload>
           </Form.Item>
           <Form.Item style={{ color: '#fff', marginBottom: 0 }}>
             <Button

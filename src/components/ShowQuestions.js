@@ -14,8 +14,6 @@ import {
   List,
   Card
 } from 'antd'
-import { EditableCell, EditableFormRow } from './Editable'
-import QuestionTable from './QuestionTable'
 const { Option } = Select
 const InputGroup = Input.Group
 const { TextArea } = Input
@@ -23,41 +21,8 @@ const { TextArea } = Input
 class Qtable extends React.Component {
   constructor (props) {
     super(props)
-    this.cols = [
-      {
-        title: 'Question',
-        dataIndex: 'name',
-        width: '80%'
-      },
-      {
-        title: 'operation',
-        dataIndex: 'operation'
-      }
-    ]
-  }
-  columns = () =>
-    this.cols.map(col => {
-      if (!col.editable) {
-        return col
-      }
-      return {
-        ...col,
-        onCell: record => ({
-          record,
-          editable: col.editable,
-          dataIndex: col.dataIndex,
-          title: col.title
-        })
-      }
-    })
-  components = {
-    body: {
-      row: EditableFormRow,
-      cell: EditableCell
-    }
   }
   render () {
-    const { dataSource, testID } = this.props
     return (
       <div>
         <Table

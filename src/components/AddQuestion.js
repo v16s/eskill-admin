@@ -22,6 +22,10 @@ class AddQuestion extends Component {
       Qnumber: '',
       title: '',
       definition: '',
+      opt1: '',
+      opt2: '',
+      opt3: '',
+      opt4: '',
       dataSource: [],
       fileList: []
     }
@@ -73,17 +77,24 @@ class AddQuestion extends Component {
   onSubmit = e => {
     e.preventDefault()
 
-    const { branch, course, title, definition } = this.state
+    const { branch, course, title, definition, opt1, opt2, opt3, opt4, fileList } = this.state
 
     axios
       .post('http://localhost:3000/api/coordinator/addquestion', {
         branch,
         course,
         title,
-        definition
+        definition,
+        opt1,
+        opt2,
+        opt3,
+        opt4,
+        fileList
       })
       .then(result => {
-        this.props.history.push('/')
+        if (result.data.success) {
+          history.push('/')
+        }
       })
       .catch(err => {
         console.log(err)
@@ -106,7 +117,11 @@ class AddQuestion extends Component {
       dataSource,
       title,
       definition,
-      fileList
+      fileList,
+      opt1,
+      opt2,
+      opt3,
+      opt4
     } = this.state
     return (
       <div>
@@ -253,7 +268,7 @@ class AddQuestion extends Component {
                     <Input
                       name='opt1'
                       size='large'
-                      value={this.state.opt1}
+                      value={opt1}
                       onChange={this.onChange}
                       placeholder='Option 1'
                       style={{ margin: '2px 0' }}
@@ -268,7 +283,7 @@ class AddQuestion extends Component {
                     <Input
                       name='opt2'
                       size='large'
-                      value={this.state.opt2}
+                      value={opt2}
                       onChange={this.onChange}
                       placeholder='Option 2'
                       style={{ margin: '2px 0' }}
@@ -286,7 +301,7 @@ class AddQuestion extends Component {
                     <Input
                       name='opt3'
                       size='large'
-                      value={this.state.opt3}
+                      value={opt3}
                       onChange={this.onChange}
                       placeholder='Option 3'
                       style={{ margin: '2px 0' }}
@@ -301,7 +316,7 @@ class AddQuestion extends Component {
                     <Input
                       name='opt4'
                       size='large'
-                      value={this.state.opt4}
+                      value={opt4}
                       onChange={this.onChange}
                       placeholder='Option 4'
                       style={{ margin: '2px 0' }}

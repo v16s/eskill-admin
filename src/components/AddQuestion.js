@@ -27,7 +27,8 @@ class AddQuestion extends Component {
       opt3: '',
       opt4: '',
       dataSource: [],
-      fileList: []
+      fileList: [],
+      radiogroup: ''
     }
   }
   componentDidMount () {
@@ -77,19 +78,29 @@ class AddQuestion extends Component {
   onSubmit = e => {
     e.preventDefault()
 
-    const { branch, course, title, definition, opt1, opt2, opt3, opt4, fileList } = this.state
-
+    const {
+      branch,
+      course,
+      title,
+      definition,
+      opt1,
+      opt2,
+      opt3,
+      opt4,
+      file,
+      radiogroup
+    } = this.state
+    let formData = new FormData()
+    formData.append('branch', branch)
+    formData.append('course', course)
+    formData.append('title', title)
+    formData.append('definition', definition)
+    formData.append('options', JSON.stringify({ 1: opt1, 2: opt2, 3: opt3, 4: opt4 }))
+    formData.append('answer', radiogroup)
+    formData.append('image', file)
     axios
-      .post('http://localhost:3000/api/coordinator/addquestion', {
-        branch,
-        course,
-        title,
-        definition,
-        opt1,
-        opt2,
-        opt3,
-        opt4,
-        fileList
+      .post('http://localhost:3000/api/coordinator/addquestion', formData, {
+        headers: { 'content-type': 'multipart/form-data' }
       })
       .then(result => {
         if (result.data.success) {

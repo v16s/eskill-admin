@@ -8,9 +8,11 @@ export default class QuestionTable extends React.Component {
     super(props)
     this.cols = [
       {
-        title: 'Question',
-        dataIndex: 'name',
-        width: '80%'
+        title: 'Question Number',
+        dataIndex: 'n',
+        width: '80%',
+        render: (text, record, i) =>
+          `Question ${i + 1} (${text} in the database)`
       },
       {
         title: 'operation',

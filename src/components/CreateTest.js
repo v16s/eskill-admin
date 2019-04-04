@@ -11,7 +11,9 @@ class CreateTest extends React.Component {
       branch: '',
       course: '',
       questions: '',
-      time: '',
+      hours: undefined,
+      minutes: undefined,
+      seconds: undefined,
       number: '',
       testID: '',
       dataSource: []
@@ -37,8 +39,17 @@ class CreateTest extends React.Component {
   onSubmit = e => {
     e.preventDefault()
 
-    const { branch, course, questions, time, testID, number } = this.state
-
+    const {
+      branch,
+      course,
+      questions,
+      hours,
+      minutes,
+      seconds,
+      testID,
+      number
+    } = this.state
+    let time = hours * 3600 + minutes * 60 + seconds
     axios
       .post('http://localhost:3000/api/admin/createTest', {
         branch,
@@ -62,7 +73,9 @@ class CreateTest extends React.Component {
       branch,
       course,
       questions,
-      time,
+      hours,
+      minutes,
+      seconds,
       testID,
       number,
       dataSource
@@ -160,14 +173,36 @@ class CreateTest extends React.Component {
             />
           </Form.Item>
           <Form.Item label='Test Time'>
-            <Input
-              size='large'
-              name='time'
-              onChange={this.onChange}
-              value={time}
-              type='number'
-              placeholder='Total Time'
-            />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Input
+                size='large'
+                name='hours'
+                onChange={this.onChange}
+                value={hours}
+                type='number'
+                placeholder='Hours'
+                style={{ width: '30%' }}
+              />
+              <Input
+                size='large'
+                name='minutes'
+                onChange={this.onChange}
+                value={minutes}
+                type='number'
+                placeholder='minutes'
+                label='minutes'
+                style={{ width: '30%' }}
+              />
+              <Input
+                size='large'
+                name='seconds'
+                onChange={this.onChange}
+                value={seconds}
+                type='number'
+                placeholder='seconds'
+                style={{ width: '30%' }}
+              />
+            </div>
           </Form.Item>
           <Form.Item label='Total Students'>
             <Input

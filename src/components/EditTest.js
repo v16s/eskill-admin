@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { history, StudentTable, FacultyTable } from 'components'
 import { Form, Input, Button, Card, Row, Col } from 'antd'
+import Axios from 'axios'
 const Search = Input.Search
 
 class EditTest extends Component {
@@ -10,6 +11,7 @@ class EditTest extends Component {
 
   render () {
     let { tid } = this.props
+    console.log(this.props)
     return (
       <div>
         <style jsx global>{/* CSS */ `
@@ -224,10 +226,17 @@ class EditTest extends Component {
                   }}
                 >
                   <Row gutter={16} style={{ width: '100%' }}>
-                    <Col md={4}>Test ID</Col>
-                    <Col md={4}>Test Name</Col>
+                    <Col md={4}>{tid}</Col>
                   </Row>
-                  <Button size='large' type='danger'>
+                  <Button
+                    size='large'
+                    type='danger'
+                    onClick={e => {
+                      Axios.post('http://localhost:3000/api/admin/endtest', {
+                        testID: tid
+                      })
+                    }}
+                  >
                     Abort
                   </Button>
                 </div>

@@ -10,7 +10,7 @@ class EditTest extends Component {
   }
 
   render () {
-    let { tid } = this.props
+    let { tid, branch, course } = this.props
     console.log(this.props)
     return (
       <div>
@@ -233,7 +233,9 @@ class EditTest extends Component {
                     type='danger'
                     onClick={e => {
                       Axios.post('http://localhost:3000/api/admin/endtest', {
-                        testID: tid
+                        testID: tid,
+                        course,
+                        branch
                       })
                     }}
                   >

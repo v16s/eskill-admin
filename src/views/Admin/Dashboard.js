@@ -24,7 +24,7 @@ export default class Dashboard extends Component {
       .catch(err => {
         console.log(err)
       })
-      this.updateWindowDimensions()
+    this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
   }
 
@@ -67,9 +67,9 @@ export default class Dashboard extends Component {
           .ant-card {
             height: 350px;
             width: 100%;
-            background-color: #001f3d !important;
+            background-color: #001f3d;
             color: #fff !important;
-            border-color: #001f3d !important;
+            border-color: #001f3d;
             & .ant-statistic-title {
               color: #4a5c6d !important;
               margin-bottom: 0 !important;

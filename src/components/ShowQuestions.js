@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { toArray } from 'lodash'
 import {
   Form,
   Input,
@@ -11,12 +12,15 @@ import {
   Modal,
   Button,
   List,
-  Card
+  Card,
+  Radio,
+  Row,
+  Col
 } from 'antd'
 const { Option } = Select
 const InputGroup = Input.Group
 const { TextArea } = Input
-
+const { Group: RadioGroup, Button: RadioButton } = Radio
 class Qtable extends React.Component {
   constructor (props) {
     super(props)
@@ -91,10 +95,11 @@ export default class ShowQuestions extends React.Component {
   onEdit = () => {}
 
   render () {
+    console.log(this.state.questions.find(k => k.title == 'Hello 1'), 'hi')
     const { course, branch, session, questions } = this.state
 
     const dataset = ['Question 1', 'Question 2', 'Question 3', 'Question 4']
-
+    const { title, opt1, opt2, opt3, opt4 } = this.state
     const columns = [
       {
         title: '',
@@ -102,7 +107,6 @@ export default class ShowQuestions extends React.Component {
         width: '10%',
         render: (text, record) => (
           <div>
-            {console.log(text, record)}
             <Button size='small' type='primary' onClick={this.showModal}>
               View Question
             </Button>
@@ -111,28 +115,109 @@ export default class ShowQuestions extends React.Component {
               visible={this.state.visible}
               onCancel={this.handleCancel}
             >
-              <List
-                bordered
-                itemLayout='horizontal'
-                dataSource={dataset}
-                renderItem={item => (
-                  <List.Item
-                    actions={[
-                      <div>
-                        <Button
-                          onClick={this.showModal1}
-                          size='small'
-                          type='primary'
-                        >
-                          Edit
-                        </Button>
-                      </div>
-                    ]}
+              <Form
+                style={{ padding: 0, maxWidth: 500 }}
+                onSubmit={this.onSubmit}
+                className='custom-form'
+              >
+                <Form.Item label='Title'>
+                  <Input
+                    style={{ width: '100%' }}
+                    size='large'
+                    display='flex'
+                    name='title'
+                    onChange={this.onChange}
+                    value={record.title}
+                    placeholder='Title'
+                  />
+                </Form.Item>
+                <Form.Item label='Description'>
+                  <Input.TextArea
+                    id='definiton'
+                    style={{ width: '100%' }}
+                    rows={4}
+                    name='definition'
+                    value='{definition}'
+                    onChange={this.onChange}
+                  />
+                </Form.Item>
+                <Form.Item label='Answer'>
+                  <RadioGroup
+                    buttonStyle='solid'
+                    onChange={this.onChange}
+                    name='radiogroup'
+                    style={{
+                      width: '100%'
+                    }}
                   >
-                    {item}
-                  </List.Item>
-                )}
-              />
+                    <Row gutter={16}>
+                      <Col md={12}>
+                        <RadioButton
+                          value={1}
+                          style={{ width: '100%', height: 'auto' }}
+                        >
+                          <Input
+                            name='opt1'
+                            size='large'
+                            value={opt1}
+                            onChange={this.onChange}
+                            placeholder='Option 1'
+                            style={{ margin: '2px 0' }}
+                          />
+                        </RadioButton>
+                      </Col>
+                      <Col md={12}>
+                        <RadioButton
+                          value={2}
+                          style={{ width: '100%', height: 'auto' }}
+                        >
+                          <Input
+                            name='opt2'
+                            size='large'
+                            value={opt2}
+                            onChange={this.onChange}
+                            placeholder='Option 2'
+                            style={{ margin: '2px 0' }}
+                          />
+                        </RadioButton>
+                      </Col>
+                    </Row>
+
+                    <Row gutter={16} style={{ marginTop: '15px' }}>
+                      <Col md={12}>
+                        <RadioButton
+                          value={3}
+                          style={{ width: '100%', height: 'auto' }}
+                        >
+                          <Input
+                            name='opt3'
+                            size='large'
+                            value={opt3}
+                            onChange={this.onChange}
+                            placeholder='Option 3'
+                            style={{ margin: '2px 0' }}
+                          />
+                        </RadioButton>
+                      </Col>
+                      <Col md={12}>
+                        <RadioButton
+                          value={4}
+                          style={{ width: '100%', height: 'auto' }}
+                        >
+                          <Input
+                            name='opt4'
+                            size='large'
+                            value={opt4}
+                            onChange={this.onChange}
+                            placeholder='Option 4'
+                            style={{ margin: '2px 0' }}
+                          />
+                        </RadioButton>
+                      </Col>
+                    </Row>
+                  </RadioGroup>
+                </Form.Item>
+              </Form>
             </Modal>
           </div>
         )

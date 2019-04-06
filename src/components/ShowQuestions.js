@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import { AddQuestion } from './AddQuestion'
 import {
   Form,
   Input,
@@ -61,7 +60,19 @@ export default class ShowQuestions extends React.Component {
     this.setState({ branch: e })
   }
   onSelectChange = e => {
-    this.setState({ course: e })
+    this.setState({ course: e }, () => {
+      axios
+        .get(
+          `http://localhost:3000/api/coordinator/questions/${
+            this.state.branch
+          }/${e}`
+        )
+        .then(res => {
+          if (res.data.success) {
+            this.setState({ questions: res.data.questions })
+          }
+        })
+    })
   }
 
   showModal = () => {
@@ -91,8 +102,9 @@ export default class ShowQuestions extends React.Component {
         width: '10%',
         render: (text, record) => (
           <div>
+            {console.log(text, record)}
             <Button size='small' type='primary' onClick={this.showModal}>
-              View Questions
+              View Question
             </Button>
             <Modal
               title='Questions'
@@ -126,11 +138,10 @@ export default class ShowQuestions extends React.Component {
         )
       },
       {
-        title: 'Session',
-        dataIndex: 'session',
+        title: 'Title',
+        dataIndex: 'title',
         width: '70%',
-        key: 'session',
-        render: text => <a href='javascript:;'>{text}</a>
+        key: 'title'
       },
       {
         title: 'Action',
@@ -142,16 +153,7 @@ export default class ShowQuestions extends React.Component {
         )
       }
     ]
-    const data = [
-      {
-        key: '1',
-        session: 'Session 1'
-      },
-      {
-        key: '2',
-        session: 'Session 2'
-      }
-    ]
+    const data = this.state.questions
     return (
       <div>
         <style jsx global>{/* CSS */ `
@@ -180,6 +182,21 @@ export default class ShowQuestions extends React.Component {
           select:-internal-autofill-selected {
             box-shadow: inset 0 0 0px 9999px #00284f;
             border-color: transparent !important;
+          }
+          .ant-list {
+            color: #fff;
+            &-bordered {
+              border-color: #1890ff;
+            }
+            &-bordered &-item {
+              border-color: #000d19;
+            }
+            &-item {
+              &:hover {
+                cursor: pointer;
+              }
+              background-color: #1890ff;
+            }
           }
           .custom-form .ant-form-item-label label {
             color: #ddd !important;
@@ -216,10 +233,15 @@ export default class ShowQuestions extends React.Component {
           }
           .student-table table {
             border-color: transparent;
+
             td,
-            tr > td {
+            tr > td,
+            tr:hover,
+            .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
               border-color: transparent;
               background-color: rgb(0, 13, 25);
+
+              background: rgb(0, 13, 25);
               color: #fff;
             }
             .ant-table-row-expand-icon {
@@ -252,7 +274,7 @@ export default class ShowQuestions extends React.Component {
               defaultValue={'Choose Branch...'}
               name='branch'
               onChange={this.onBranchChange}
-              value={branch}
+              value={branch || 'Choose Branch...'}
               size='large'
               style={{ width: '100%' }}
             >

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react'
+import axios from 'axios'
 import {
   Form,
   Input,
@@ -9,14 +9,14 @@ import {
   Upload,
   Radio,
   Row,
-  Col,
-} from 'antd';
-const { Option } = Select;
-const { Group: RadioGroup, Button: RadioButton } = Radio;
-import history from './history';
+  Col
+} from 'antd'
+import history from './history'
+const { Option } = Select
+const { Group: RadioGroup, Button: RadioButton } = Radio
 class AddQuestion extends Component {
-  constructor() {
-    super();
+  constructor () {
+    super()
     this.state = {
       branch: '',
       course: '',
@@ -29,55 +29,55 @@ class AddQuestion extends Component {
       opt4: '',
       dataSource: [],
       fileList: [],
-      radiogroup: '',
-    };
+      radiogroup: ''
+    }
   }
-  componentDidMount() {
-    const dataSource = this.state;
+  componentDidMount () {
+    const dataSource = this.state
     axios.get('http://localhost:3000/api/global/branches').then(res => {
-      console.log(res.data);
-      this.setState({ dataSource: res.data.branches });
-    });
+      console.log(res.data)
+      this.setState({ dataSource: res.data.branches })
+    })
   }
   onChange = e => {
-    const state = this.state;
-    state[e.target.name] = e.target.value;
-    this.setState(state);
-  };
+    const state = this.state
+    state[e.target.name] = e.target.value
+    this.setState(state)
+  }
   onBranchChange = e => {
-    this.setState({ branch: e });
-  };
+    this.setState({ branch: e })
+  }
   onSelectChange = e => {
-    this.setState({ course: e });
-  };
+    this.setState({ course: e })
+  }
   normFile = e => {
-    console.log('Upload event:', e);
+    console.log('Upload event:', e)
     if (Array.isArray(e)) {
-      return e;
+      return e
     }
-    return e && e.fileList;
-  };
+    return e && e.fileList
+  }
   handlePreview = file => {
     this.setState({
       previewImage: file.url || file.thumbUrl,
-      previewVisible: true,
-    });
-  };
+      previewVisible: true
+    })
+  }
   beforeUpload = e => {
-    this.setState({ img: e.file });
-    return false;
-  };
+    this.setState({ img: e.file })
+    return false
+  }
   handleChange = ({ fileList }) => {
-    this.setState({ fileList });
-  };
+    this.setState({ fileList })
+  }
   onChange = e => {
-    const state = this.state;
-    state[e.target.name] = e.target.value;
-    this.setState(state);
-  };
+    const state = this.state
+    state[e.target.name] = e.target.value
+    this.setState(state)
+  }
 
   onSubmit = e => {
-    e.preventDefault();
+    e.preventDefault()
 
     const {
       branch,
@@ -89,57 +89,60 @@ class AddQuestion extends Component {
       opt3,
       opt4,
       file,
-      radiogroup,
-    } = this.state;
-    let formData = new FormData();
-    let isFile = this.state.fileList.length > 0;
-    formData.append('branch', branch);
-    formData.append('course', course);
-    formData.append('title', title);
-    formData.append('definition', definition);
+      radiogroup
+    } = this.state
+    let formData = new FormData()
+    let isFile = this.state.fileList.length > 0
+    formData.append('branch', branch)
+    formData.append('course', course)
+    formData.append('title', title)
+    formData.append('definition', definition)
     formData.append(
       'options',
       JSON.stringify({ 1: opt1, 2: opt2, 3: opt3, 4: opt4 })
-    );
-    formData.append('answer', radiogroup);
-    isFile ? formData.append('image', file) : null;
+    )
+    formData.append('answer', radiogroup)
+    isFile ? formData.append('image', file) : null
     axios
       .post(
         'http://localhost:3000/api/coordinator/addquestion',
         isFile
           ? formData
           : {
-              definition,
-              branch,
-              course,
-              title,
-              options: JSON.stringify({ 1: opt1, 2: opt2, 3: opt3, 4: opt4 }),
-              answer: radiogroup,
-            },
+            definition,
+            branch,
+            course,
+            title,
+            options: JSON.stringify({ 1: opt1, 2: opt2, 3: opt3, 4: opt4 }),
+            answer: radiogroup
+          },
         isFile && {
-          headers: { 'content-type': 'multipart/form-data' },
+          headers: { 'content-type': 'multipart/form-data' }
         }
       )
       .then(result => {
         if (result.data.success) {
-          history.push('/');
+          history.push('/')
         }
       })
       .catch(err => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
   beforeUpload = file => {
-    this.setState({ file });
-    return false;
-  };
+    this.setState({ file })
+    return false
+  }
   uploadButton = (
     <div>
       <Icon type='plus' />
       <div className='ant-upload-text'>Upload</div>
     </div>
-  );
-  render() {
+  )
+  handlepreviewCancel = e => {
+    this.setState({ previewVisible: false })
+  }
+  render () {
     const {
       branch,
       course,
@@ -151,7 +154,9 @@ class AddQuestion extends Component {
       opt2,
       opt3,
       opt4,
-    } = this.state;
+      previewVisible,
+      previewImage
+    } = this.state
     return (
       <div>
         <style jsx global>{/* CSS */ `
@@ -221,6 +226,15 @@ class AddQuestion extends Component {
           onSubmit={this.onSubmit}
           className='custom-form'
         >
+          {previewVisible && (
+            <Modal
+              visible={previewVisible}
+              footer={null}
+              onCancel={this.handlepreviewCancel}
+            >
+              <img alt='example' style={{ width: '100%' }} src={previewImage} />
+            </Modal>
+          )}
           <Form.Item label='Branch'>
             <Select
               style={{ width: '100%' }}
@@ -247,13 +261,13 @@ class AddQuestion extends Component {
               size='large'
               style={{ width: '100%' }}
             >
-              {this.state.dataSource.map(function(b) {
+              {this.state.dataSource.map(function (b) {
                 if (b.name == branch) {
                   return b.courses.map(c => (
                     <Option key={c.name} value={c.name}>
                       {c.name}
                     </Option>
-                  ));
+                  ))
                 }
               })}
             </Select>
@@ -285,7 +299,7 @@ class AddQuestion extends Component {
               onChange={this.onChange}
               name='radiogroup'
               style={{
-                width: '100%',
+                width: '100%'
               }}
             >
               <Row gutter={16}>
@@ -373,7 +387,7 @@ class AddQuestion extends Component {
               style={{
                 width: '100%',
                 textAlign: 'center',
-                position: 'center',
+                position: 'center'
               }}
               onClick={this.onSubmit}
             >
@@ -382,8 +396,8 @@ class AddQuestion extends Component {
           </Form.Item>
         </Form>
       </div>
-    );
+    )
   }
 }
 
-export default AddQuestion;
+export default AddQuestion

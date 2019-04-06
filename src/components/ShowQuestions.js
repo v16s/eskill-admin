@@ -1,45 +1,9 @@
 import React from 'react'
 import axios from 'axios'
-import { toArray } from 'lodash'
-import {
-  Form,
-  Input,
-  Icon,
-  Select,
-  Upload,
-  InputNumber,
-  Table,
-  Modal,
-  Button,
-  List,
-  Card,
-  Radio,
-  Row,
-  Col
-} from 'antd'
+import { Form, Select, Table, Button } from 'antd'
+import EditQuestions from './EditQuestions'
+
 const { Option } = Select
-const InputGroup = Input.Group
-const { TextArea } = Input
-const { Group: RadioGroup, Button: RadioButton } = Radio
-class Qtable extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-  render () {
-    return (
-      <div>
-        <Table
-          className='custom-table'
-          components={this.components}
-          rowClassName={() => 'editable-row'}
-          bordered
-          dataSource={[]}
-          columns={this.columns()}
-        />
-      </div>
-    )
-  }
-}
 
 export default class ShowQuestions extends React.Component {
   constructor (props) {
@@ -56,7 +20,6 @@ export default class ShowQuestions extends React.Component {
   componentDidMount () {
     const dataSource = this.state
     axios.get('http://localhost:3000/api/global/branches').then(res => {
-      console.log(res.data)
       this.setState({ dataSource: res.data.branches })
     })
   }
@@ -79,23 +42,41 @@ export default class ShowQuestions extends React.Component {
     })
   }
 
-  showModal = () => {
+  showModal = record => {
     this.setState({
-      visible: true
+      visible: true,
+      current: record
     })
   }
 
   handleCancel = e => {
-    console.log(e)
-    this.setState({
-      visible: false
-    })
+    if (e) {
+      axios
+        .get(
+          `http://localhost:3000/api/coordinator/questions/${
+            this.state.branch
+          }/${this.state.course}`
+        )
+        .then(res => {
+          if (res.data.success) {
+            this.setState({
+              questions: res.data.questions,
+              visible: false,
+              current: undefined
+            })
+          }
+        })
+    } else {
+      this.setState({
+        visible: false,
+        current: undefined
+      })
+    }
   }
 
   onEdit = () => {}
 
   render () {
-    console.log(this.state.questions.find(k => k.title == 'Hello 1'), 'hi')
     const { course, branch, session, questions } = this.state
 
     const dataset = ['Question 1', 'Question 2', 'Question 3', 'Question 4']
@@ -107,118 +88,13 @@ export default class ShowQuestions extends React.Component {
         width: '10%',
         render: (text, record) => (
           <div>
-            <Button size='small' type='primary' onClick={this.showModal}>
+            <Button
+              size='small'
+              type='primary'
+              onClick={e => this.showModal(record)}
+            >
               View Question
             </Button>
-            <Modal
-              title='Questions'
-              visible={this.state.visible}
-              onCancel={this.handleCancel}
-            >
-              <Form
-                style={{ padding: 0, maxWidth: 500 }}
-                onSubmit={this.onSubmit}
-                className='custom-form'
-              >
-                <Form.Item label='Title'>
-                  <Input
-                    style={{ width: '100%' }}
-                    size='large'
-                    display='flex'
-                    name='title'
-                    onChange={this.onChange}
-                    value={record.title}
-                    placeholder='Title'
-                  />
-                </Form.Item>
-                <Form.Item label='Description'>
-                  <Input.TextArea
-                    id='definiton'
-                    style={{ width: '100%' }}
-                    rows={4}
-                    name='definition'
-                    value='{definition}'
-                    onChange={this.onChange}
-                  />
-                </Form.Item>
-                <Form.Item label='Answer'>
-                  <RadioGroup
-                    buttonStyle='solid'
-                    onChange={this.onChange}
-                    name='radiogroup'
-                    style={{
-                      width: '100%'
-                    }}
-                  >
-                    <Row gutter={16}>
-                      <Col md={12}>
-                        <RadioButton
-                          value={1}
-                          style={{ width: '100%', height: 'auto' }}
-                        >
-                          <Input
-                            name='opt1'
-                            size='large'
-                            value={opt1}
-                            onChange={this.onChange}
-                            placeholder='Option 1'
-                            style={{ margin: '2px 0' }}
-                          />
-                        </RadioButton>
-                      </Col>
-                      <Col md={12}>
-                        <RadioButton
-                          value={2}
-                          style={{ width: '100%', height: 'auto' }}
-                        >
-                          <Input
-                            name='opt2'
-                            size='large'
-                            value={opt2}
-                            onChange={this.onChange}
-                            placeholder='Option 2'
-                            style={{ margin: '2px 0' }}
-                          />
-                        </RadioButton>
-                      </Col>
-                    </Row>
-
-                    <Row gutter={16} style={{ marginTop: '15px' }}>
-                      <Col md={12}>
-                        <RadioButton
-                          value={3}
-                          style={{ width: '100%', height: 'auto' }}
-                        >
-                          <Input
-                            name='opt3'
-                            size='large'
-                            value={opt3}
-                            onChange={this.onChange}
-                            placeholder='Option 3'
-                            style={{ margin: '2px 0' }}
-                          />
-                        </RadioButton>
-                      </Col>
-                      <Col md={12}>
-                        <RadioButton
-                          value={4}
-                          style={{ width: '100%', height: 'auto' }}
-                        >
-                          <Input
-                            name='opt4'
-                            size='large'
-                            value={opt4}
-                            onChange={this.onChange}
-                            placeholder='Option 4'
-                            style={{ margin: '2px 0' }}
-                          />
-                        </RadioButton>
-                      </Col>
-                    </Row>
-                  </RadioGroup>
-                </Form.Item>
-              </Form>
-            </Modal>
           </div>
         )
       },
@@ -347,7 +223,68 @@ export default class ShowQuestions extends React.Component {
               }
             }
           }
+          .ant-modal {
+            &-content {
+              background-color: #000d19;
+            }
+            &-footer {
+              border-color: transparent;
+            }
+            &-body {
+              border-color: transparent;
+            }
+            .ant-btn {
+              background-color: #001f3d;
+              border-color: #001f3d;
+              color: #fff;
+            }
+            .ant-btn-primary.ant-btn {
+              background-color: #1890ff;
+              border-color: #1890ff;
+            }
+          }
+          .ant-radio-button-wrapper {
+            background-color: #00417f;
+            border-color: #00417f;
+            color: #fff;
+          }
+          .custom-form .ant-form-item-label label {
+            color: #ddd !important;
+          }
+          .ant-upload.ant-upload-drag {
+            background: #001f3d;
+            border-color: #001f3d;
+            color: #fff;
+            p.ant-upload-text {
+              color: #fff;
+            }
+          }
+          .ant-radio-group-solid
+            .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled),
+          .ant-radio-group-solid
+            .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
+            background-color: #00db95;
+            border-color: #00db95;
+            .ant-input,
+            .ant-input:focus,
+            .ant-input:hover,
+            .ant-select-arrow {
+              background-color: #002d19 !important;
+              border-color: transparent !important;
+              color: #fff !important;
+            }
+          }
+          .ant-radio-button-wrapper:first-child {
+            border-left-color: transparent;
+          }
         `}</style>
+        {this.state.current && (
+          <EditQuestions
+            record={this.state.current}
+            visible={this.state.visible}
+            handleCancel={this.handleCancel}
+          />
+        )}
         <Form
           style={{ padding: 0 }}
           onSubmit={this.onSubmit}
@@ -391,13 +328,15 @@ export default class ShowQuestions extends React.Component {
               })}
             </Select>
           </Form.Item>
-          <Form.Item label='Session Table' width='100%'>
-            <Table
-              className='student-table'
-              columns={columns}
-              dataSource={data}
-            />
-          </Form.Item>
+          {data.length > 0 && (
+            <Form.Item label='Session Table' width='100%'>
+              <Table
+                className='student-table'
+                columns={columns}
+                dataSource={data}
+              />
+            </Form.Item>
+          )}
         </Form>
       </div>
     )

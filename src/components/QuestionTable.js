@@ -15,6 +15,11 @@ export default class QuestionTable extends React.Component {
           `Question ${i + 1} (${text} in the database)`
       },
       {
+        title: 'Current Answer',
+        dataIndex: 'answer',
+        render: text => (text == '' ? 'Not yet attempted' : text)
+      },
+      {
         title: 'operation',
         dataIndex: 'operation',
         render: (text, record) =>

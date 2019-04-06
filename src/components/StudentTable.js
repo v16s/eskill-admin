@@ -118,6 +118,9 @@ export default class StudentTable extends React.Component {
   }
   componentDidMount () {
     this.fetchStudents()
+    setInterval(() => {
+      this.fetchStudents()
+    }, 5000)
   }
 
   render () {

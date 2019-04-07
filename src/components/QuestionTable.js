@@ -18,21 +18,6 @@ export default class QuestionTable extends React.Component {
         title: 'Current Answer',
         dataIndex: 'answer',
         render: text => (text == '' ? 'Not yet attempted' : text)
-      },
-      {
-        title: 'operation',
-        dataIndex: 'operation',
-        render: (text, record) =>
-          this.props.dataSource.length >= 1 ? (
-            <Popconfirm
-              title='Sure to reassign?'
-              onConfirm={() =>
-                this.props.handleDelete(record.key, this.props.label)
-              }
-            >
-              <a href='javascript:;'>Reassign</a>
-            </Popconfirm>
-          ) : null
       }
     ]
   }

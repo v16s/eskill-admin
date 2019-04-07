@@ -1,7 +1,7 @@
 import React from 'react'
 import history from './history'
 import { Button, Card, Statistic } from 'antd'
-
+import { timeParser } from '../utils'
 class AdminCard extends React.Component {
   state = { time: undefined }
   componentDidMount () {}
@@ -17,9 +17,7 @@ class AdminCard extends React.Component {
 
   render () {
     let { testID, branch, course, time, questions, status } = this.props
-    time = `${parseInt(time / 3600)}:${parseInt((time % 3600) / 60)}:${parseInt(
-      (time % 3600) % 60
-    )}`
+    time = timeParser(time)
     if (status == 0) {
       return (
         <Card
@@ -56,6 +54,9 @@ class AdminCard extends React.Component {
           style={{ marginTop: 10, width: '100%' }}
           type='primary'
           size='large'
+          onClick={() => {
+            history.push(`/test/${branch}/${course}/${testID}/report`)
+          }}
         >
           Print Reports
         </Button>

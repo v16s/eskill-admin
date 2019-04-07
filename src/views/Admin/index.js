@@ -5,11 +5,16 @@ import {
   EditTest,
   CreateTest,
   QuestionPg,
-  AddCourse
+  AddCourse,
+  Report
 } from 'components'
 import Dashboard from './Dashboard'
 export default ({ login, redirect }) => (
   <Switch>
+    <Route
+      path='/test/:branch/:course/:tid/report'
+      component={props => <Report {...props.match.params} />}
+    />
     <Route path='/register' component={FCRegister} />
     <Route
       path='/test/:branch/:course/:tid'

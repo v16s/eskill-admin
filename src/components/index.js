@@ -14,6 +14,7 @@ import LoadScreen from './LoadScreen'
 import ShowQuestions from './ShowQuestions'
 import AddQuestion from './AddQuestion'
 import EditTestFaculty from './EditTestFaculty'
+import Report from './Report'
 export {
   history,
   Login,
@@ -30,5 +31,6 @@ export {
   LoadScreen,
   FacultyTable,
   AddQuestion,
-  EditTestFaculty
+  EditTestFaculty,
+  Report
 }

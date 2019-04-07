@@ -4,6 +4,7 @@ import { EditableCell, EditableFormRow } from './Editable'
 import QuestionTable from './QuestionTable'
 import { reject } from 'lodash'
 import axios from 'axios'
+import { timeParser } from '../utils'
 export default class StudentTable extends React.Component {
   columns
   constructor (props) {
@@ -23,6 +24,11 @@ export default class StudentTable extends React.Component {
         dataIndex: 'progress',
         render: d => <Progress percent={d} showInfo={false} />,
         width: '60%'
+      },
+      {
+        title: 'Time Left',
+        dataIndex: 'time',
+        render: text => timeParser(text)
       },
       {
         title: ' ',
@@ -118,9 +124,14 @@ export default class StudentTable extends React.Component {
   }
   componentDidMount () {
     this.fetchStudents()
-    setInterval(() => {
-      this.fetchStudents()
-    }, 5000)
+    this.setState({
+      poll: setInterval(() => {
+        this.fetchStudents()
+      }, 1000)
+    })
+  }
+  componentWillUnmount () {
+    this.setState({ poll: clearInterval(this.state.poll) })
   }
 
   render () {

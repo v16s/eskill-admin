@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { Form, Select, Table, Button } from 'antd'
+import { Form, Select, Table, Button, Popconfirm } from 'antd'
 import EditQuestions from './EditQuestions'
 
 const { Option } = Select
@@ -73,7 +73,28 @@ export default class ShowQuestions extends React.Component {
       })
     }
   }
-
+  refetch = () => {
+    axios
+      .get(
+        `http://localhost:3000/api/coordinator/questions/${this.state.branch}/${
+          this.state.course
+        }`
+      )
+      .then(res => {
+        if (res.data.success) {
+          this.setState({
+            questions: res.data.questions
+          })
+        }
+      })
+  }
+  delete = e => {
+    axios
+      .post('http://localhost:3000/api/coordinator/deleteQuestion', e)
+      .then(res => {
+        this.refetch()
+      })
+  }
   onEdit = () => {}
 
   render () {
@@ -108,9 +129,16 @@ export default class ShowQuestions extends React.Component {
         title: 'Action',
         key: 'action',
         render: (text, record) => (
-          <span>
-            <a href='javascript:;'>Delete</a>
-          </span>
+          <Popconfirm
+            title='Are you sure of deleting this question?'
+            onConfirm={e => this.delete(record)}
+            onCancel={() => {}}
+            okText='Yes'
+            cancelText='No'
+            placement='topRight'
+          >
+            <a href='#'>Delete</a>
+          </Popconfirm>
         )
       }
     ]
@@ -143,6 +171,31 @@ export default class ShowQuestions extends React.Component {
           select:-internal-autofill-selected {
             box-shadow: inset 0 0 0px 9999px #00284f;
             border-color: transparent !important;
+          }
+          .ant-popover-buttons {
+            .ant-btn.ant-btn-primary {
+              background-color: #ff4d4f;
+              border-color: #ff4d4f;
+              color: #fff;
+            }
+            .ant-btn {
+              background-color: #001f3d;
+              border-color: #001f3d;
+              color: #fff;
+            }
+          }
+          .ant-popover {
+            &-inner {
+              background-color: #004d96;
+              color: #fff;
+            }
+            &-arrow {
+              background-color: #004d96 !important;
+              border-color: #004d96 !important;
+            }
+            &-message-title {
+              color: #fff;
+            }
           }
           .ant-list {
             color: #fff;

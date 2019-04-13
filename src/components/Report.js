@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import LoadScreen from './LoadScreen';
-import { Row, Col } from 'antd';
+import { Row, Col, Card,Table } from 'antd';
 
 export default class Report extends Component {
   state = {};
@@ -50,36 +50,114 @@ export default class Report extends Component {
   }
 
   render() {
+    const columns = [
+      {
+        title: 'S.No',
+        dataIndex: 'sno',
+        render: text => <a href="javascript:;">{text}</a>,
+      },
+      {
+      title: 'Name',
+      dataIndex: 'name',
+      render: text => <a href="javascript:;">{text}</a>,
+    }, {
+      title: 'Score',
+      dataIndex: 'score',
+      render: text => <a href="javascript:;">{text}</a>,
+    }, {
+      title: 'Maximum',
+      dataIndex: 'max',
+      render: text => <a href="javascript:;">{text}</a>,
+    }];
+    const col = [
+      {
+        title: 'Question',
+        dataIndex: 'question',
+        render: text => <a href="javascript:;">{text}</a>,
+      },
+      {
+      title: 'Student Answer',
+      dataIndex: 'sanswer',
+      render: text => <a href="javascript:;">{text}</a>,
+    }, {
+      title: 'Correct Answer',
+      dataIndex: 'canswer',
+      render: text => <a href="javascript:;">{text}</a>,
+    }];
+
     let { report } = this.state;
+    const data = [];
+// // data.push(
+// report.map(r => ({
+//     // Name: {r.username}, Score: {r.score}/{r.max}
+//       sanswer:
+//       r.result.map(a => (                 
+//           !a.status && a.your == ''
+//             ?'N/A':a.your     
+//       ))
+    
+//   }))
+// )
+
     let shape = {
-      height: '40px',
-      width: '40px',
+      height: '130px',
+      width: '100px',
       border: '1px solid #fff',
       display: 'flex',
       justifyContent: 'center',
+      marginRight:'10px',
       alignItems: 'center',
       color: '#fff',
+     
     };
+    let c =1;
     if (report) {
       return (
-        <div>
+        <div style={{color:'white'}}>
+         
+           <Table columns={columns} 
+            dataSource=
+          {report.map(r=>({
+            sno:c++,
+            name:r.username,
+            score:r.score,
+            max:r.max
+          //   sanswer:
+          //  r.result.map(a =>(
+          //   !a.status && a.your == ''
+          //   ?'N/A'
+          //   :a.your
+          //  )),
+          //  canswer:
+          //  r.result.map(a =>(
+          //   !a.status && a.your == ''
+          //   ?'N/A'
+          //   :a.correct
+            
+          //  ))
+            }))}/>
           {report.map(r => (
             <div>
-              {r.username}, {r.score}/{r.max}
+              Name: {r.username}, Score: {r.score}/{r.max}
               <div style={{ display: 'flex' }}>
                 {r.result.map(a => (
-                  <div
-                    style={
-                      a.status
-                        ? { ...shape, background: '#00ff00' }
-                        : { ...shape, background: '#ff0000' }
-                    }
-                  >
+                  <Card hoverable
+                  style={
+                    a.status
+                      ? { ...shape, background: '#00ff00' }
+                      : { ...shape, background: '#ff0000' }
+                  }>
+                  <div>                
                     {!a.status && a.your == ''
                       ? 'N/A'
-                      : `${a.your}: ${a.correct}`}
-                  </div>
+                      : `Your Answer :${a.your}
+                      Correct Answer : ${a.correct}`}
+                     
+                  </div>  
+                  </Card>
+                  
                 ))}
+                <br></br>
               </div>
             </div>
           ))}

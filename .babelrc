@@ -18,7 +18,8 @@
         "alias": {
           "dist": "./dist",
           "components": "./src/components",
-          "views": "./src/views"
+          "views": "./src/views",
+          "config": "./src/config"
         }
       }
     ]

@@ -58,11 +58,16 @@ export default class Report extends Component {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      color: '#fff',
+      color: '#000',
     };
     if (report) {
       return (
-        <div>
+        <div
+          style={{
+            backgroundColor: '#fff',
+            color: '#000',
+          }}
+        >
           {report.map(r => (
             <div>
               {r.username}, {r.score}/{r.max}

@@ -49,7 +49,7 @@ class CreateTest extends React.Component {
       testID,
       number
     } = this.state
-    let time = hours * 3600 + minutes * 60 + seconds
+    let time = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds)
     axios
       .post('http://localhost:3000/api/admin/createTest', {
         branch,

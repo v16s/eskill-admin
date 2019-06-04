@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import LoadScreen from './LoadScreen';
-import { Row, Col, Card, Table } from 'antd';
+import { Row, Col, Card, Table, Progress,Button, Modal,Tooltip } from 'antd';
 
 export default class Report extends Component {
   state = {};
+  handleCancel = () => {
+    this.setState({ visible: false });
+  };
+  modal = () => {
+    this.setState({ visible: true });
+  };
   componentDidMount() {
     let { tid } = this.props;
     axios.get('http://localhost:3000/api/faculty/reports/' + tid).then(res => {
@@ -50,7 +56,55 @@ export default class Report extends Component {
   }
 
   render() {
+    let { report } = this.state;
     const columns = [
+      {
+        title: 'S.No',
+        dataIndex: 'sno',
+        render: text => <a href='javascript:;'>{text}</a>,
+      },
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        render: text => <a href='javascript:;'>{text}</a>,
+      },
+      {
+        title: 'Progress',
+        dataIndex: 'score',
+        render: progress => ( <Progress percent={progress} size="small" />),
+      },
+      {
+        title: 'Score',
+        dataIndex: 'score',
+        render: text => <a href='javascript:;'>{text}</a>,
+      },
+      {
+        title: 'Maximum',
+        dataIndex: 'max',
+        render: text => <a href='javascript:;'>{text}</a>,
+      },
+      // {
+      //   title: 'Questions',
+      //   render: (report) => ((report => 
+      //     <div>
+      //       <div style={{ display: 'flex' }}>
+      //         {report.result.map(a => (
+      //           <div 
+      //             style={
+      //               a.status
+      //                 ? { ...shape, background: '#00ff00' }
+      //                 : { ...shape, background: '#ff0000' }
+      //             }
+      //           >
+      //           </div>
+      //         ))}
+      //         <br />
+      //       </div>
+      //     </div>
+      //   )),
+      // },
+    ];
+    const col = [
       {
         title: 'S.No',
         dataIndex: 'sno',
@@ -67,47 +121,17 @@ export default class Report extends Component {
         render: text => <a href='javascript:;'>{text}</a>,
       },
       {
-        title: 'Maximum',
+        title: 'Out Of',
         dataIndex: 'max',
         render: text => <a href='javascript:;'>{text}</a>,
       },
     ];
-    const col = [
-      {
-        title: 'Question',
-        dataIndex: 'question',
-        render: text => <a href='javascript:;'>{text}</a>,
-      },
-      {
-        title: 'Student Answer',
-        dataIndex: 'sanswer',
-        render: text => <a href='javascript:;'>{text}</a>,
-      },
-      {
-        title: 'Correct Answer',
-        dataIndex: 'canswer',
-        render: text => <a href='javascript:;'>{text}</a>,
-      },
-    ];
-
-    let { report } = this.state;
-    const data = [];
-    // // data.push(
-    // report.map(r => ({
-    //     // Name: {r.username}, Score: {r.score}/{r.max}
-    //       sanswer:
-    //       r.result.map(a => (
-    //           !a.status && a.your == ''
-    //             ?'N/A':a.your
-    //       ))
-
-    //   }))
-    // )
 
     let shape = {
-      height: '130px',
-      width: '100px',
+      width: '13px',
+      height:'13px',
       border: '1px solid #fff',
+      borderRadius: '50%',
       display: 'flex',
       justifyContent: 'center',
       marginRight: '10px',
@@ -118,6 +142,7 @@ export default class Report extends Component {
     if (report) {
       return (
         <div style={{ color: 'white' }}>
+          
           <Table
             columns={columns}
             dataSource={report.map(r => ({
@@ -125,46 +150,44 @@ export default class Report extends Component {
               name: r.username,
               score: r.score,
               max: r.max,
-              //   sanswer:
-              //  r.result.map(a =>(
-              //   !a.status && a.your == ''
-              //   ?'N/A'
-              //   :a.your
-              //  )),
-              //  canswer:
-              //  r.result.map(a =>(
-              //   !a.status && a.your == ''
-              //   ?'N/A'
-              //   :a.correct
-
-              //  ))
             }))}
           />
-          {report.map(r => (
-            <div>
-              Name: {r.username}, Score: {r.score}/{r.max}
-              <div style={{ display: 'flex' }}>
-                {r.result.map(a => (
-                  <Card
-                    hoverable
-                    style={
-                      a.status
-                        ? { ...shape, background: '#00ff00' }
-                        : { ...shape, background: '#ff0000' }
-                    }
-                  >
-                    <div>
-                      {!a.status && a.your == ''
-                        ? 'N/A'
-                        : `Your Answer :${a.your}
-                      Correct Answer : ${a.correct}`}
-                    </div>
-                  </Card>
-                ))}
-                <br />
-              </div>
-            </div>
-          ))}
+          <Button
+          onClick={this.modal}
+          type='primary'
+          style={{ marginBottom: 16 }}
+        >
+          Print
+        </Button>
+        <Modal
+          visible={this.state.visible}
+          onOk={this.handleAdd}
+          confirmLoading={this.state.confirmLoading}
+          onCancel={this.handleCancel}
+          title={null}
+          closable={true}
+        >
+         <div style={{ color: 'white' }}>
+           <Card style={{ width: '100%' }} title='Results' hoverable='true'>
+           <Tooltip title="Percentage">
+              <Progress style={{alignItems:'center'}} percent={0} type="circle" />
+               <p>{' '}</p>
+               <p>{'total Number of Students Passed: 0'}</p>
+               <p>{'total Number of Students failed: 0'}</p>
+               <p>{'total Number of Students :0'}</p>
+           </Tooltip>
+             </Card>
+          <Table
+            columns={col}
+            dataSource={report.map(r => ({
+              sno: c++,
+              name: r.username,
+              score: r.score,
+              max: r.max,
+            }))}
+          />
+          </div>
+        </Modal>
         </div>
       );
     }

@@ -6,7 +6,11 @@
   "author": "Vignesh Shankar",
   "license": "MIT",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@progress/kendo-drawing": "^1.5.12",
+    "@progress/kendo-file-saver": "^1.0.7",
+    "@progress/kendo-react-pdf": "^3.2.0"
+  },
   "devDependencies": {
     "@nivo/legends": "^0.52.1",
     "@nivo/pie": "^0.52.1",

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Doc from './DocService';
+import PdfContainer from './PdfContainer';
 import LoadScreen from './LoadScreen';
 import { Row, Col, Card, Table, Progress,Button, Modal,Tooltip } from 'antd';
 
@@ -11,6 +13,7 @@ export default class Report extends Component {
   modal = () => {
     this.setState({ visible: true });
   };
+  createPdf = (html) => Doc.createPdf(html);
   componentDidMount() {
     let { tid } = this.props;
     axios.get('http://localhost:3000/api/faculty/reports/' + tid).then(res => {
@@ -167,6 +170,9 @@ export default class Report extends Component {
           title={null}
           closable={true}
         >
+          <React.Fragment>
+            <PdfContainer createPdf={this.createPdf}>
+              <React.Fragment>
          <div style={{ color: 'white' }}>
            <Card style={{ width: '100%' }} title='Results' hoverable='true'>
            <Tooltip title="Percentage">
@@ -187,6 +193,9 @@ export default class Report extends Component {
             }))}
           />
           </div>
+          </React.Fragment>
+          </PdfContainer>
+          </React.Fragment>
         </Modal>
         </div>
       );

@@ -164,11 +164,11 @@ export default class Report extends Component {
         </Button>
         <Modal
           visible={this.state.visible}
-          onOk={this.handleAdd}
           confirmLoading={this.state.confirmLoading}
           onCancel={this.handleCancel}
           title={null}
           closable={true}
+          footer={null}
         >
           <React.Fragment>
             <PdfContainer createPdf={this.createPdf}>

@@ -6,7 +6,13 @@ import LoadScreen from './LoadScreen';
 import { Row, Col, Card, Table, Progress,Button, Modal,Tooltip } from 'antd';
 
 export default class Report extends Component {
-  state = {};
+  constructor(){
+    super();
+    this.state={
+      tot:'0',
+      totscore:'0',
+    };
+  }
   handleCancel = () => {
     this.setState({ visible: false });
   };
@@ -46,8 +52,11 @@ export default class Report extends Component {
                   if (a.status) {
                     score++;
                   }
-                });
+                }
+                );
+                
                 resolve({ result: res, username: r.username, score, max });
+                
               });
             });
           })
@@ -178,9 +187,9 @@ export default class Report extends Component {
            <Tooltip title="Percentage">
               <Progress style={{alignItems:'center'}} percent={0} type="circle" />
                <p>{' '}</p>
-               <p>{'total Number of Students Passed: 0'}</p>
-               <p>{'total Number of Students failed: 0'}</p>
-               <p>{'total Number of Students :0'}</p>
+               <p>total Number of Students Passed:{this.state.totscore}</p>
+               <p>total Number of Students failed:0</p>
+               <p>total Number of Students :{this.state.tot}</p>
            </Tooltip>
              </Card>
           <Table
@@ -203,3 +212,27 @@ export default class Report extends Component {
     return <LoadScreen />;
   }
 }
+// {{report.map(r => (
+//   <div>
+//     Name: {r.username}, Score: {r.score}/{r.max}
+//     <div style={{ display: 'flex' }}>
+//       {r.result.map(a => (
+//         <div 
+//           style={
+//             a.status
+//               ? { ...shape, background: '#00ff00' }
+//               : { ...shape, background: '#ff0000' }
+//           }
+//         >
+//           {/* <div>
+//             {!a.status && a.your == ''
+//               ? 'N/A'
+//               : `Your Answer :${a.your}
+//             Correct Answer : ${a.correct}`}
+//           </div> */}
+//         </div>
+//       ))}
+//       <br />
+//     </div>
+//   </div>
+// ))}}

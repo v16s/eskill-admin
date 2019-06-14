@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@progress/kendo-drawing": "^1.5.12",
+    "@progress/kendo-drawing": "^1.2.0",
     "@progress/kendo-file-saver": "^1.0.7",
     "@progress/kendo-react-pdf": "^3.2.0"
   },
@@ -34,8 +34,8 @@
     "parcel-bundler": "^1.11.0",
     "path-to-regexp": "^3.0.0",
     "prop-types": "^15.7.2",
-    "react": "~0.14.0 || >=15.0.0 || >=16.0.0",
-    "react-dom": "~0.14.0 || >=15.0.0 || >= 16.0.0",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
     "react-katex": "^2.0.2",
     "react-latex": "^1.2.0",
     "react-router-dom": "^4.3.1",

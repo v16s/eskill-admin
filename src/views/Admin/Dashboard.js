@@ -14,7 +14,6 @@ export default class Dashboard extends Component {
     }
   }
   componentDidMount () {
-    console.log('hello')
     axios
       .get('http://localhost:3000/api/admin/tests')
       .then(res => {

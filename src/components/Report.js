@@ -9,6 +9,7 @@ export default class Report extends Component {
   constructor() {
     super();
     this.state = {
+      id:' ',
       tot: "0",
       totscore: "0",
     };
@@ -23,8 +24,6 @@ export default class Report extends Component {
   createPdf = html => Doc.createPdf(html);
   componentDidMount() {
     let { tid } = this.props;
-    let e = 0,
-      f = 0;
     axios.get("http://localhost:3000/api/faculty/reports/" + tid).then(res => {
       if (res.data.success) {
         Promise.all(
@@ -167,7 +166,7 @@ export default class Report extends Component {
       d = 0,
       e = 0,
       f = 0;
-
+  let { tid } = this.props;
     if (report) {
       return (
         <div style={{ color: "white" }}>
@@ -202,13 +201,16 @@ export default class Report extends Component {
                   <div style={{ color: "white" }}>
                     <Card
                       style={{ width: "100%" }}
-                      title="Results"
+                      title={"Results : "+tid}
                       hoverable="true"
                     >
                       <Tooltip title="Percentage">
-                        {console.log(
+                      {console.log(
                           report.map(r => (r.score >= r.max / 2 ? ++d : ++f))
                         )}
+
+                      <Col >
+                      <Card type='inner'>
                         <p> </p>
                         <p>
                           Total Number of Students Passed:
@@ -219,11 +221,29 @@ export default class Report extends Component {
                           {f}
                         </p>
                         <p>{"Total Number of Students :" + c}</p>
+                        </Card>
+                        </Col>
+                        <Col >
+                        <Card type='inner'>
+                          <Row gutter={16}>
+                      <Col span={10}>
                         <Progress
                           style={{ alignContent: "right" }}
                           percent={(d * 100) / c}
-                          type="circle"
+                          type="dashboard"
                         />
+                        </Col>
+                        <Col span={10}>
+                        <Progress
+                          style={{ alignContent: "right" }}
+                          percent={100-((d * 100) / c)}
+                          type="dashboard"
+                        />
+                        </Col>
+                        </Row>
+                        </Card> 
+                        </Col>
+                        
                       </Tooltip>
                     </Card>
                     <Table

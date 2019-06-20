@@ -4,6 +4,13 @@ import Doc from "./DocService";
 import PdfContainer from "./PdfContainer";
 import LoadScreen from "./LoadScreen";
 import { Row, Col, Card, Table, Progress, Button, Modal, Tooltip } from "antd";
+import
+{
+G2,
+Chart,
+Geom,
+Axis,
+} from "bizcharts";
 
 export default class Report extends Component {
   constructor() {
@@ -162,6 +169,21 @@ export default class Report extends Component {
       alignItems: "center",
       color: "#fff",
     };
+    const data = [
+      { year: "1991", value: 3 },
+      { year: "1992", value: 4 },
+      { year: "1993", value: 3.5 },
+      { year: "1994", value: 5 },
+      { year: "1995", value: 4.9 },
+      { year: "1996", value: 6 },
+      { year: "1997", value: 7 },
+      { year: "1998", value: 9 },
+      { year: "1999", value: 13 }
+    ];
+    const cols = {
+      'value': { min: 0 },
+      'year': {range: [ 0 , 1] }
+    };
     let c = 0,
       d = 0,
       e = 0,
@@ -236,22 +258,13 @@ export default class Report extends Component {
                         </Col>
                         <Col >
                         <Card type='inner'>
-                          <Row gutter={16}>
-                      <Col span={10}>
-                        <Progress
-                          style={{ alignContent: "right" }}
-                          percent={(d * 100) / c}
-                          type="dashboard"
-                        />
-                        </Col>
-                        <Col span={10}>
-                        <Progress
-                          style={{ alignContent: "right" }}
-                          percent={100-((d * 100) / c)}
-                          type="dashboard"
-                        />
-                        </Col>
-                        </Row>
+                        <Chart height={400} data={data} scale={cols} forceFit>
+            <Axis name="year" />
+            <Axis name="value" />
+            <Tooltip crosshairs={{type : "y"}}/>
+            <Geom type="line" position="year*value" size={2} />
+            <Geom type='point' position="year*value" size={4} shape={'circle'} style={{ stroke: '#fff', lineWidth: 1}} />
+          </Chart>
                         </Card> 
                         </Col>
                     </Card>

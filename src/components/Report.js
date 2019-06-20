@@ -166,7 +166,7 @@ export default class Report extends Component {
       d = 0,
       e = 0,
       f = 0;
-  let { tid } = this.props;
+      let { tid, branch, course} = this.props
     if (report) {
       return (
         <div style={{ color: "white" }}>
@@ -203,8 +203,19 @@ export default class Report extends Component {
                       style={{ width: "100%" }}
                       title={"Results : "+tid}
                       hoverable="true"
-                    >
-                      <Tooltip title="Percentage">
+                    ><Row gutter={16}>
+                      <p> </p>
+                      <Col span={10}>
+                        <p>
+                         {' Branch: '+branch}
+                         </p>
+                         </Col>
+                         <Col span={13}>
+                         <p>
+                         {"Course: "+course}
+                        </p>
+                        </Col>
+                       </Row> 
                       {console.log(
                           report.map(r => (r.score >= r.max / 2 ? ++d : ++f))
                         )}
@@ -243,8 +254,6 @@ export default class Report extends Component {
                         </Row>
                         </Card> 
                         </Col>
-                        
-                      </Tooltip>
                     </Card>
                     <Table
                       columns={col}

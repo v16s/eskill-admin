@@ -4,13 +4,7 @@ import Doc from "./DocService";
 import PdfContainer from "./PdfContainer";
 import LoadScreen from "./LoadScreen";
 import { Row, Col, Card, Table, Progress, Button, Modal, Tooltip } from "antd";
-import
-{
-G2,
-Chart,
-Geom,
-Axis,
-} from "bizcharts";
+import {Chart,Geom,Axis,} from "bizcharts";
 
 export default class Report extends Component {
   constructor() {
@@ -259,12 +253,12 @@ export default class Report extends Component {
                         <Col >
                         <Card type='inner'>
                         <Chart height={400} data={data} scale={cols} forceFit>
-            <Axis name="year" />
-            <Axis name="value" />
-            <Tooltip crosshairs={{type : "y"}}/>
-            <Geom type="line" position="year*value" size={2} />
-            <Geom type='point' position="year*value" size={4} shape={'circle'} style={{ stroke: '#fff', lineWidth: 1}} />
-          </Chart>
+                         <Axis name="year" />
+                         <Axis name="value" />
+                         <Tooltip crosshairs={{type : "y"}}/>
+                         <Geom type="line" position="year*value" size={2} />
+                         <Geom type='point' position="year*value" size={4} shape={'circle'} style={{ stroke: '#fff', lineWidth: 1}} />
+                        </Chart>
                         </Card> 
                         </Col>
                     </Card>
